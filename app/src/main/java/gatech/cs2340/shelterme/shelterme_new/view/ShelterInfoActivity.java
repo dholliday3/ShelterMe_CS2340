@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
-
+import gatech.cs2340.shelterme.shelterme_new.R;
 
 /**
  * Created by Ally Liu on 2/27/2018.

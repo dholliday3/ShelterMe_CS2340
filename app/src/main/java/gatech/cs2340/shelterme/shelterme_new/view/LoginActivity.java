@@ -3,6 +3,7 @@ package gatech.cs2340.shelterme.shelterme_new.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,11 +29,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import gatech.cs2340.shelterme.shelterme_new.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import gatech.cs2340.shelterme.shelterme_new.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world", "shark@week.com:boi45"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -63,6 +63,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
+    /**
+     * Email and password entered by user
+     */
+    private String _userEnteredEmail;
+    private String _userEnteredPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +91,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setText("Login");
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+                if (isEmailValid(_userEnteredEmail) && isPasswordValid(_userEnteredPassword)) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        Button mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+            }
+        });
+
+        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -155,25 +182,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        _userEnteredEmail = mEmailView.getText().toString();
+        _userEnteredPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(_userEnteredPassword) && !isPasswordValid(_userEnteredPassword)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(_userEnteredEmail)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!isEmailValid(_userEnteredEmail)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
@@ -187,19 +214,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(_userEnteredEmail, _userEnteredPassword);
             mAuthTask.execute((Void) null);
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        boolean valid;
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            valid = false;
+        } else {
+            valid = false;
+            for (int i = 0; i < DUMMY_CREDENTIALS.length; i++) {
+                if (DUMMY_CREDENTIALS[i].contains(email)) {
+                    valid = true;
+                }
+            }
+        }
+        return valid;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        boolean valid;
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            valid = false;
+        } else {
+            valid = false;
+            for (int i = 0; i < DUMMY_CREDENTIALS.length; i++) {
+                if (DUMMY_CREDENTIALS[i].contains(password)) {
+                    valid = true;
+                }
+            }
+        }
+        return valid;
     }
 
     /**
@@ -290,6 +337,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //nothing
     }
 
     /**

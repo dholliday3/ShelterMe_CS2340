@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import gatech.cs2340.shelterme.shelterme_new.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
