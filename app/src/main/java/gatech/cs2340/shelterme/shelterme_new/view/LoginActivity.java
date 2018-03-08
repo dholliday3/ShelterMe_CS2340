@@ -32,7 +32,9 @@ import android.widget.TextView;
 import gatech.cs2340.shelterme.shelterme_new.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -53,6 +55,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world", "shark@week.com:boi45"
     };
+
+    static Map<String, String> Credentials = new HashMap<>();
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -96,7 +101,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
-                if (isEmailValid(_userEnteredEmail) && isPasswordValid(_userEnteredPassword)) {
+                // CHANGE HERE TO GET RID OF DUMMY CREDENTIALS!!!
+                if ((isEmailValid(_userEnteredEmail) && isPasswordValid(_userEnteredPassword)) ||
+                        isLoginValid(_userEnteredEmail, _userEnteredPassword)) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -190,18 +197,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(_userEnteredPassword) && !isPasswordValid(_userEnteredPassword)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError("This password is too short");
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(_userEnteredEmail)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError("This field is required");
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(_userEnteredEmail)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError("This email is invalid");
             focusView = mEmailView;
             cancel = true;
         }
@@ -223,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean valid;
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             valid = false;
-        } else {
+        } else { // DELETE THIS ONCE DUMMY CREDENTIALS ARE DELETED
             valid = false;
             for (int i = 0; i < DUMMY_CREDENTIALS.length; i++) {
                 if (DUMMY_CREDENTIALS[i].contains(email)) {
@@ -238,12 +245,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean valid;
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             valid = false;
-        } else {
+        } else { // DELETE THIS ONCE DUMMY CREDENTIALS ARE DELETED
             valid = false;
             for (int i = 0; i < DUMMY_CREDENTIALS.length; i++) {
                 if (DUMMY_CREDENTIALS[i].contains(password)) {
                     valid = true;
                 }
+            }
+        }
+        return valid;
+    }
+
+    private boolean isLoginValid(String email, String password) {
+        boolean valid;
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            valid = false;
+        } else {
+            valid = false;
+            //for (int i = 0; i < Credentials.size(); i++) {
+            if (Credentials.containsKey(email)) {
+                if (Credentials.get(email).equals(password)) {
+                    valid = true;
+                }
+                //}
             }
         }
         return valid;

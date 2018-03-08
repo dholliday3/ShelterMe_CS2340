@@ -10,20 +10,20 @@ tools:layout_editor_absoluteX="0dp"
 tools:layout_editor_absoluteY="361dp"
 tools:showIn="@layout/activity_main">
 
-<Space
+    <Space
     android:layout_width="match_parent"
     android:layout_height="422dp" />
 
-<Button
-    android:id="@+id/search_button"
-    android:layout_width="113dp"
-    android:layout_height="wrap_content"
-    android:text="@android:string/search_go" />
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:text="@string/search" />
 
-<Button
-    android:id="@+id/logout_button"
-    android:layout_width="113dp"
-    android:layout_height="wrap_content"
-    android:text="logout" />
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:text="@string/logout" />
 
 </LinearLayout>
