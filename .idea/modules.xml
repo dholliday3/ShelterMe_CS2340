@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ShelterMe_new.iml" filepath="$PROJECT_DIR$/ShelterMe_new.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShelterMe_CS2340.iml" filepath="$PROJECT_DIR$/ShelterMe_CS2340.iml" />
+      <module fileurl="file://C:\Users\jason\OneDrive\Documents\Georgia Tech\Sophomore Year 2017-2018\SPRING 17-18\CS 2340\ShelterMe_CS2340\ShelterMe_new.iml" filepath="C:\Users\jason\OneDrive\Documents\Georgia Tech\Sophomore Year 2017-2018\SPRING 17-18\CS 2340\ShelterMe_CS2340\ShelterMe_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
