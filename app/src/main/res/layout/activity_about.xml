@@ -11,13 +11,12 @@ android:layout_height="match_parent"
         android:id="@+id/shelterName_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:gravity="center"
         android:text="shelterName"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="1dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_about"
@@ -26,10 +25,8 @@ android:layout_height="match_parent"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toBottomOf="@id/shelterName_textview"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toBottomOf="@id/shelterName_textview" />
 
 </android.support.constraint.ConstraintLayout>
 
