@@ -24,7 +24,7 @@
         android:layout_height="126dp"
         android:fontFamily="dosis"
         android:gravity="center"
-        android:text="ShelterMe"
+        android:text="@string/shelterme"
         android:textColor="@color/colorPrimary"
         android:textSize="32sp" />
 
@@ -86,7 +86,7 @@
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="register"
+                android:text="@string/register"
                 android:textStyle="bold"
                 tools:text="Register" />
 
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="cancel" />
+                android:text="@string/cancel" />
 
         </LinearLayout>
 
