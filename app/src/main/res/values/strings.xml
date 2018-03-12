@@ -15,4 +15,9 @@
     </string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="shelterme">ShelterMe</string>
+    <string name="register">register</string>
+    <string name="cancel">cancel</string>
+    <string name="logout">logout</string>
+    <string name="search">search</string>
 </resources>
