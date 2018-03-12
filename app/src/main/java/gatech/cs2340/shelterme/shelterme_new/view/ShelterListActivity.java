@@ -17,6 +17,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import gatech.cs2340.shelterme.shelterme_new.R;
+import gatech.cs2340.shelterme.shelterme_new.controller.PopulateShelters;
+import gatech.cs2340.shelterme.shelterme_new.models.Shelter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +40,8 @@ public class ShelterListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Hard-coded shelters. Need to put in real values.
-        final ArrayList<String> shelters = new ArrayList<String>(Arrays.asList("Shelter 1",
+        Shelter[] shelters = PopulateShelters.getShelters();
+        /*final ArrayList<String> shelters = new ArrayList<String>(Arrays.asList("Shelter 1",
                 "Shelter 2",
                 "Shelter 3",
                 "Shelter 5",
@@ -46,9 +49,14 @@ public class ShelterListActivity extends AppCompatActivity {
                 "Shelter 7",
                 "Shelter 8",
                 "Shelter 9"));
+        */
+        final ArrayList<String> shelterNames = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            shelterNames.add(shelters[i].getShelter_name());
+        }
 
         //converts the string array into list object
-        ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelters);
+        ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelterNames);
         ListView shelterListView = (ListView) findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
@@ -58,7 +66,7 @@ public class ShelterListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                         String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
                         //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
-                        String shelter = shelters.get(position);
+                        String shelter = shelterNames.get(position);
 
                         Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
                         intent.putExtra("name", shelter);

@@ -26,9 +26,11 @@ public class ShelterInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         //Toolbar stuff.
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        */
 
         //Code that gets information from the ListView.
         String shelterName = this.getIntent().getExtras().getString("name");
