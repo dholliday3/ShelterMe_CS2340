@@ -32,8 +32,19 @@ public class ShelterInfoActivity extends AppCompatActivity {
 
         //Code that gets information from the ListView.
         String shelterName = this.getIntent().getExtras().getString("name");
-        TextView nameTV = (TextView) findViewById(R.id.shelterName_textview);
+        TextView nameTV = findViewById(R.id.shelterName_textview);
         nameTV.setText(shelterName);
+        TextView addressTV = findViewById(R.id.address);
+        addressTV.setText("Address: " + MainActivity.shelters.get(shelterName).address);
+        TextView phoneTV = findViewById(R.id.phoneNumber);
+        phoneTV.setText("Phone Number: " + MainActivity.shelters.get(shelterName).phone_number);
+        TextView capacityTV = findViewById(R.id.capacity);
+        capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).capacity);
+        TextView restrictionsTV = findViewById(R.id.restrictions);
+        restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).restrictions);
+        TextView special_notesTV = findViewById(R.id.specialNotes);
+        special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).special_notes);
+
     }
     //Back button.
     @Override
