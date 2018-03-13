@@ -1,5 +1,6 @@
 package gatech.cs2340.shelterme.shelterme_new.model;
 
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
@@ -18,9 +19,6 @@ public class Shelter {
     public String longitude;
     public String latitude;
 
-    public Shelter() {
-
-    }
 
     public Shelter(String uid, String address, String phone_number, String capacity,
                    String special_notes, String restrictions, String shelter_name, String longitude,
