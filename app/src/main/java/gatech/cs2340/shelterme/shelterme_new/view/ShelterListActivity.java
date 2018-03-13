@@ -27,6 +27,8 @@ import java.util.Arrays;
  */
 
 public class ShelterListActivity extends AppCompatActivity {
+
+    private ArrayList<String> shelter_names = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +39,14 @@ public class ShelterListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Hard-coded shelters. Need to put in real values.
-        final ArrayList<String> shelters = new ArrayList<String>(Arrays.asList("Shelter 1",
-                "Shelter 2",
-                "Shelter 3",
-                "Shelter 5",
-                "Shelter 6",
-                "Shelter 7",
-                "Shelter 8",
-                "Shelter 9"));
+
+        for(String name : MainActivity.shelters.keySet()){
+            shelter_names.add(name);
+        }
+
 
         //converts the string array into list object
-        ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelters);
+        ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelter_names);
         ListView shelterListView = (ListView) findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
@@ -58,7 +56,7 @@ public class ShelterListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                         String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
                         //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
-                        String shelter = shelters.get(position);
+                        String shelter = shelter_names.get(position);
 
                         Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
                         intent.putExtra("name", shelter);

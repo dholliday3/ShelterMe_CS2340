@@ -20,4 +20,9 @@
     <string name="cancel">cancel</string>
     <string name="logout">logout</string>
     <string name="search">search</string>
+    <string name="sheltername">shelterName</string>
+    <string name="address">address</string>
+    <string name="capacity">capacity</string>
+    <string name="restrictions">restrictions</string>
+    <string name="specialnotes">specialNotes</string>
 </resources>
