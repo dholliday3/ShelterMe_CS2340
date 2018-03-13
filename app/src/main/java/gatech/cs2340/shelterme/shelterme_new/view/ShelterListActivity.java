@@ -21,16 +21,29 @@ import gatech.cs2340.shelterme.shelterme_new.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Ally Liu on 2/26/2018.
  */
 
 public class ShelterListActivity extends AppCompatActivity {
+
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelterlist);
+
+        //get info from Firebase
+
+
 
         //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);

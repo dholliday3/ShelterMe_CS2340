@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "130622846168",
+    "firebase_url": "https://sheltermecs2340.firebaseio.com",
+    "project_id": "sheltermecs2340",
+    "storage_bucket": "sheltermecs2340.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130622846168:android:cd32f4c468dc1131",
+        "android_client_info": {
+          "package_name": "gatech.cs2340.shelterme.shelterme_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130622846168-eb9m7im82umdi5un9ninh1ltulc7jah6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gatech.cs2340.shelterme.shelterme_new",
+            "certificate_hash": "901c0692fa11e990fad16e087022c162b88fb9f0"
+          }
+        },
+        {
+          "client_id": "130622846168-usldv5l193omsu8qkqijc0qnsirslhb0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIvcJsQkH6gNMlHhRkNlhF_EgMUXtXs70"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130622846168-usldv5l193omsu8qkqijc0qnsirslhb0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
