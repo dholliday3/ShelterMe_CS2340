@@ -17,7 +17,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import gatech.cs2340.shelterme.shelterme_new.R;
-
+import android.view.Menu;
+import android.view.MenuInflater;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -72,4 +73,13 @@ public class ShelterListActivity extends AppCompatActivity {
         this.finish();
         return true;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        return true;
+    }
+
 }
