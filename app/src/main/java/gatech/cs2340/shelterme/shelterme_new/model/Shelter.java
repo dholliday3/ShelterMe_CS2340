@@ -34,4 +34,8 @@ public class Shelter {
         this.latitude = latitude;
 
     }
+
+    public Shelter() {
+        //Default Constructor
+    }
 }
