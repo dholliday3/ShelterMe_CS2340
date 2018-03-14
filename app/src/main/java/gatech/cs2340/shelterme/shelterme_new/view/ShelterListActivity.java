@@ -39,6 +39,7 @@ public class ShelterListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("List of Shelters");
 
 
         for(String name : MainActivity.shelters.keySet()){
