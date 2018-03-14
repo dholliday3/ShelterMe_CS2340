@@ -15,12 +15,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import gatech.cs2340.shelterme.shelterme_new.R;
+import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -30,10 +35,14 @@ import java.util.Arrays;
 public class ShelterListActivity extends AppCompatActivity {
 
     private ArrayList<String> shelter_names = new ArrayList<>();
+    private Set<String> shelterNameSet = new HashSet<>();
+    ArrayAdapter<String> shelterListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelterlist);
+
+
 
         //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
@@ -41,13 +50,12 @@ public class ShelterListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of Shelters");
 
-
         for(String name : MainActivity.shelters.keySet()){
             shelter_names.add(name);
         }
 
         //converts the string array into list object
-        ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelter_names);
+        shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelter_names);
         ListView shelterListView = (ListView) findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
@@ -65,6 +73,39 @@ public class ShelterListActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
+        // gets data from gender spinner and updates list show on search --> notifies listadapter
+        // that the list has changed
+        //Get data from spinners
+        final Spinner genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
+        Spinner ageSpinner = (Spinner) findViewById(R.id.age_spinner);
+
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String genderSelected = genderSpinner.getItemAtPosition(position).toString();
+
+                if (genderSelected == "Male")
+                    genderSelected = "Men";
+                else if (genderSelected == "Female")
+                    genderSelected = "Women";
+                shelter_names = FilterShelters.filterShelterGender(genderSelected);
+                shelterListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        /* maybe use this.
+        String genderSelected = genderSpinner.getSelectedItem().toString();
+        String ageSelected = ageSpinner.getSelectedItem().toString();
+        */
+
+        //shelter_names = new FilterShelters().filterShelterGender(genderSelec)
     }
     //Back button.
     @Override
