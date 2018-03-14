@@ -46,7 +46,6 @@ public class ShelterListActivity extends AppCompatActivity {
             shelter_names.add(name);
         }
 
-
         //converts the string array into list object
         ListAdapter shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelter_names);
         ListView shelterListView = (ListView) findViewById(R.id.shelterList);
