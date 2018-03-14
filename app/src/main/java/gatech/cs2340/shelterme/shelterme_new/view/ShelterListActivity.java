@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,9 +26,12 @@ import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -38,15 +42,17 @@ import java.util.Set;
 public class ShelterListActivity extends AppCompatActivity {
     public static String querySearch = "";
 
-    private ArrayList<String> shelter_names = new ArrayList<>();
+    private ArrayList<String> shelterNames = new ArrayList<>();
     private Set<String> shelterNameSet = new HashSet<>();
     ArrayAdapter<String> shelterListAdapter;
+
+    //spinners
+    private Spinner genderSpinner, ageSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelterlist);
-
-
 
         //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
@@ -54,12 +60,25 @@ public class ShelterListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of Shelters");
 
-        for(String name : MainActivity.shelters.keySet()){
-            shelter_names.add(name);
-        }
+        //set the list of data
+        setShelterNames();
 
+        //populate search based on shelters --> initially from setShelterNames
+        populateShelterSearch();
+
+        //set spinners
+        addAgeSpinnerListener();
+        addGenderSpinnerListener();
+
+    }
+    //Back button.
+
+    /**
+     * populates shelterList into a listview on the search
+     */
+    private void populateShelterSearch() {
         //converts the string array into list object
-        shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelter_names);
+        shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelterNames);
         ListView shelterListView = (ListView) findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
@@ -69,7 +88,7 @@ public class ShelterListActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                         String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
                         //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
-                        String shelter = shelter_names.get(position);
+                        String shelter = shelterNames.get(position);
 
                         Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
                         intent.putExtra("name", shelter);
@@ -77,25 +96,40 @@ public class ShelterListActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
 
+    /**
+     * class that populates the shelter list --> originally with the data from the database
+     */
+    private void setShelterNames() {
+        for(String name : MainActivity.shelters.keySet()){
+            shelterNames.add(name);
+        }
+    }
 
-        // gets data from gender spinner and updates list show on search --> notifies listadapter
-        // that the list has changed
-        //Get data from spinners
-        final Spinner genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
-        Spinner ageSpinner = (Spinner) findViewById(R.id.age_spinner);
-
+    /**
+     * sets items on age spinner
+     *
+     */
+    private void addGenderSpinnerListener() {
+        genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String genderSelected = genderSpinner.getItemAtPosition(position).toString();
+                String item = parent.getSelectedItem().toString();
+                if (item.equals("not-specified")) {
+                    setShelterNames();
+                    populateShelterSearch();
+                } else if (item.equals("Male")) {
+                    shelterNames = FilterShelters.filterShelterGender("Men");
 
-                if (genderSelected == "Male")
-                    genderSelected = "Men";
-                else if (genderSelected == "Female")
-                    genderSelected = "Women";
-                shelter_names = FilterShelters.filterShelterGender(genderSelected);
-                shelterListAdapter.notifyDataSetChanged();
+                    Log.d("shelterNames", shelterNames.toString());
+
+                    populateShelterSearch();
+                } else if (item.equals("Female")) {
+                    shelterNames = FilterShelters.filterShelterGender("Women");
+                    populateShelterSearch();
+                }
             }
 
             @Override
@@ -104,14 +138,41 @@ public class ShelterListActivity extends AppCompatActivity {
             }
         });
 
-        /* maybe use this.
-        String genderSelected = genderSpinner.getSelectedItem().toString();
-        String ageSelected = ageSpinner.getSelectedItem().toString();
-        */
-
-        //shelter_names = new FilterShelters().filterShelterGender(genderSelec)
     }
-    //Back button.
+
+    private void addAgeSpinnerListener() {
+        ageSpinner = (Spinner) findViewById(R.id.age_spinner);
+        ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getSelectedItem().toString();
+                if (item.equals("not-specified")) {
+                    setShelterNames();
+                    populateShelterSearch();
+                } else if (item.equals("Families w/ newborns")) {
+                    shelterNames = FilterShelters.filterShelterAge("Families w/ newborns");
+                    populateShelterSearch();
+                } else if (item.equals("Children")) {
+                    shelterNames = FilterShelters.filterShelterAge("Children");
+                    populateShelterSearch();
+                } else if (item.equals("Young adults")) {
+                    shelterNames = FilterShelters.filterShelterAge("Young adults");
+                    populateShelterSearch();
+                } else if (item.equals("Anyone")) {
+                    shelterNames = FilterShelters.filterShelterAge("Anyone");
+                    populateShelterSearch();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -157,7 +218,7 @@ public class ShelterListActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                 String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
                                 //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
-                                String shelter = shelter_names.get(position);
+                                String shelter = shelterNames.get(position);
 
                                 Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
                                 intent.putExtra("name", shelter);

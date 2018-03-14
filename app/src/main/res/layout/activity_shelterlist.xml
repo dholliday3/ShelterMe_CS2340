@@ -24,12 +24,14 @@ tools:context="gatech.cs2340.shelterme.shelterme_new.view.ShelterListActivity">
             android:id="@+id/gender_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:entries="@array/gender_entries"
             android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/age_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:entries="@array/age_entries"
             android:layout_weight="1" />
     </LinearLayout>
 
