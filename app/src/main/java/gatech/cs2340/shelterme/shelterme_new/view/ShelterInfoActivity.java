@@ -29,6 +29,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Shelter Page");
 
         //Code that gets information from the ListView.
         String shelterName = this.getIntent().getExtras().getString("name");

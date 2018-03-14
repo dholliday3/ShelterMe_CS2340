@@ -12,7 +12,7 @@ tools:context="gatech.cs2340.shelterme.shelterme_new.view.ShelterListActivity">
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    android:theme="?attr/actionBarTheme" />
+    android:theme="@style/AppToolbar" />
 
 <ListView
     android:id="@+id/shelterList"
