@@ -30,8 +30,12 @@
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.ShelterListActivity" />
+        <activity android:name=".view.ShelterListActivity">
+            <meta-data android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+        </activity>
         <activity android:name=".view.ShelterInfoActivity"></activity>
+
     </application>
 
 </manifest>
