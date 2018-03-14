@@ -14,5 +14,15 @@
         completions."
     </string>
     <string name="title_activity_registration">Registration</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Main Activity</string>
+    <string name="shelterme">ShelterMe</string>
+    <string name="register">register</string>
+    <string name="cancel">cancel</string>
+    <string name="logout">logout</string>
+    <string name="search">search</string>
+    <string name="sheltername">shelterName</string>
+    <string name="address">address</string>
+    <string name="capacity">capacity</string>
+    <string name="restrictions">restrictions</string>
+    <string name="specialnotes">specialNotes</string>
 </resources>

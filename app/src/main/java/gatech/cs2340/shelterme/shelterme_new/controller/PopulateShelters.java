@@ -30,8 +30,9 @@ public class PopulateShelters {
 
         for (int i = 0; i < 12; i++) {
             Shelter shelter = new Shelter(shelterData[i][0], shelterData[i][1], shelterData[i][2],
-                        shelterData[i][3], shelterData[i][4], shelterData[i][5], shelterData[i][6],
-                        shelterData[i][7], shelterData[i][8]);
+                    shelterData[i][3], shelterData[i][4], shelterData[i][5], shelterData[i][6],
+                    shelterData[i][7], shelterData[i][8]);
+
             shelters[i] = shelter;
         }
         return shelters;
