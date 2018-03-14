@@ -1,9 +1,9 @@
 package gatech.cs2340.shelterme.shelterme_new.controller;
 
-import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
+import gatech.cs2340.shelterme.shelterme_new.models.Shelter;
 
 /**
- * Created by jungwonkang on 3/12/18.
+ * Created by danielholliday on 3/8/18.
  */
 
 public class PopulateShelters {
@@ -32,6 +32,7 @@ public class PopulateShelters {
             Shelter shelter = new Shelter(shelterData[i][0], shelterData[i][1], shelterData[i][2],
                     shelterData[i][3], shelterData[i][4], shelterData[i][5], shelterData[i][6],
                     shelterData[i][7], shelterData[i][8]);
+
             shelters[i] = shelter;
         }
         return shelters;

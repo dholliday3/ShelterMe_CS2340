@@ -34,7 +34,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference mShelter = FirebaseDatabase.getInstance().getReference().child("shelters");
-    static Map<String, Shelter> shelters = new HashMap<>();
+    public static Map<String, Shelter> shelters = new HashMap<>();
     private static final String TAG = MainActivity.class.getSimpleName();
 
 
@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
         mShelter.addValueEventListener(shelterListener);
     }
 
+    /**
+     * getter for shelter map from database
+     * @return shelters map of shelters from database
+     */
+    public Map<String, Shelter> getShelters() { return shelters; }
 
     //Back button. NOTE: When this back button is pressed, it takes user out of the app.
     // May want to fix this in the future.
