@@ -25,5 +25,23 @@
     <string name="capacity">capacity</string>
     <string name="restrictions">restrictions</string>
     <string name="specialnotes">specialNotes</string>
+
+    <string name="filter_search">filters</string>
+
+    <!-- String arrays for search filter spinners -->
+    <string-array name="gender_entries">
+        <item>not-specified</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="age_entries">
+        <item>not-specified</item>
+        <item>Families w/ newborns</item>
+        <item>Children</item>
+        <item>Young adults</item>
+        <item>Anyone</item>
+    </string-array>
+
     <string name="search_hint">Search shelters</string>
+
 </resources>

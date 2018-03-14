@@ -1,5 +1,7 @@
 package gatech.cs2340.shelterme.shelterme_new.controller;
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,15 +32,14 @@ public class FilterShelters {
         //provides the opposite gender passed in --> used in logic to test if a restriction contains
         // neither "Men" or "Women"
         String oppositeGender = (gender == "Women") ? "Men" : "Women";
-        if (shelters.containsValue(Shelter.class)) {
-            for (Map.Entry<String, Shelter> entry : shelters.entrySet()) {
-                // if equals the selected gender or doesn't contain either --> done by checking if
-                // opposite gender is present. If it is, don't include.
-                if (entry.getValue().getRestrictions().matches(gender) ||
-                        (!entry.getValue().getRestrictions().matches(oppositeGender))) {
-
-                    shelterSet.add(entry.getKey());
-                }
+        Log.d("gender", gender);
+        for (Map.Entry<String, Shelter> entry : shelters.entrySet()) {
+            // if equals the selected gender or doesn't contain either --> done by checking if
+            // opposite gender is present. If it is, don't include.
+            if (entry.getValue().getRestrictions().matches(gender) ||
+                    (!entry.getValue().getRestrictions().matches(oppositeGender))) {
+                Log.d("filterShelter", entry.getValue().getRestrictions());
+                shelterSet.add(entry.getKey());
             }
         }
 
@@ -50,19 +51,12 @@ public class FilterShelters {
      */
 
     public static ArrayList<String> filterShelterAge(final String ageGroup) {
-        if (shelters.containsValue(Shelter.class)) {
-            for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
 
-                // test for children first -->
-                if (entry.getValue().getRestrictions().matches("Children")) {
-                    shelterSet.add(entry.getKey());
-                } else if (entry.getValue().getRestrictions().matches("Young adults")) {
-                    shelterSet.add(entry.getKey());
-                } else if (entry.getValue().getRestrictions().matches("Anyone")) {
-                    shelterSet.add(entry.getKey());
-                } else if (entry.getValue().getRestrictions().matches("Families w/ newborns")) {
-                    shelterSet.add(entry.getKey());
-                }
+        for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
+
+            // test for children first -->
+            if (entry.getValue().getRestrictions().matches(ageGroup)) {
+                shelterSet.add(entry.getKey());
             }
         }
 
