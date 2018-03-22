@@ -43,5 +43,6 @@
     </string-array>
 
     <string name="search_hint">Search shelters</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
