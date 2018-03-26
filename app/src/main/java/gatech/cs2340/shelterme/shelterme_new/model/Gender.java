@@ -5,4 +5,15 @@ package gatech.cs2340.shelterme.shelterme_new.model;
  */
 
 public enum Gender {
+    FEMALE ("Women"),
+    MALE ("Men"),
+    NAN ("not-specified");
+
+    private String gender;
+
+    Gender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getGender() { return gender; }
 }

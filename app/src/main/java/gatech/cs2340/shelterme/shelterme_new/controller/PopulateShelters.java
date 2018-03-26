@@ -1,6 +1,8 @@
 package gatech.cs2340.shelterme.shelterme_new.controller;
 
-import gatech.cs2340.shelterme.shelterme_new.models.Shelter;
+import android.util.Log;
+
+import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 
 /**
  * Created by danielholliday on 3/8/18.
@@ -26,8 +28,9 @@ public class PopulateShelters {
             {"12",	"Homes of Light",                                  "",		"Veterans", 	"-84.328691",	"33.747641",	"1800 Memorial Dr SE G3, Atlanta, GA 30317",	"Veterans", 	"(844) 289-8382"}
     };
 
-    public static Shelter[] populateShelters() {
-
+    public static void populateShelters() {
+        Log.d("populateShelters", "deprecated class");
+        /*
         for (int i = 0; i < 12; i++) {
             Shelter shelter = new Shelter(shelterData[i][0], shelterData[i][1], shelterData[i][2],
                     shelterData[i][3], shelterData[i][4], shelterData[i][5], shelterData[i][6],
@@ -36,9 +39,12 @@ public class PopulateShelters {
             shelters[i] = shelter;
         }
         return shelters;
+        */
     }
 
+    /*
     public static Shelter[] getShelters() {
         return populateShelters();
     }
+    */
 }
