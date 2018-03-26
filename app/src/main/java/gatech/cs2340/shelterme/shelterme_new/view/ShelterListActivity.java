@@ -159,8 +159,6 @@ public class ShelterListActivity extends AppCompatActivity {
                 //convert "Female/Male" shown on spinner to proper string used in controller logic
                 genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
 
-                Log.d("genderItem", genderItem);
-
                 switch (ageItem) {
                     case "not-specified":
                         shelterNames = FilterShelters.filterGenderAge(genderItem, ageItem);

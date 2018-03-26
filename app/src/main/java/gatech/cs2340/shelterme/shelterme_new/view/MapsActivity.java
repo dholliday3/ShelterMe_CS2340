@@ -157,6 +157,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ageItem = parent.getSelectedItem().toString();
                 String genderItem = genderSpinner.getSelectedItem().toString();
+                
+                //convert "Female/Male" shown on spinner to proper string used in controller logic
+                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
 
                 switch (ageItem) {
                     case "not-specified":
