@@ -36,12 +36,13 @@
     </string-array>
     <string-array name="age_entries">
         <item>not-specified</item>
-        <item>Families w/ newborns</item>
+        <item>Families</item>
         <item>Children</item>
         <item>Young adults</item>
         <item>Anyone</item>
     </string-array>
 
     <string name="search_hint">Search shelters</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

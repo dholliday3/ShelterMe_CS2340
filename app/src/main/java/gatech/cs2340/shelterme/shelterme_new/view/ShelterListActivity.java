@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -23,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
+import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
+import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +33,8 @@ import android.view.MenuInflater;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,10 +48,8 @@ public class ShelterListActivity extends AppCompatActivity {
     public static String querySearch = "";
 
     private ArrayList<String> shelterNames = new ArrayList<>();
-    private Set<String> shelterNameSet = new HashSet<>();
     ArrayAdapter<String> shelterListAdapter;
 
-    //spinners
     private Spinner genderSpinner, ageSpinner;
 
     @Override
@@ -54,19 +57,19 @@ public class ShelterListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelterlist);
 
-        //Toolbar stuff.
+        //Toolbar stuff
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of Shelters");
 
-        //set the list of data
-        setShelterNames();
-
         //populate search based on shelters --> initially from setShelterNames
+        setShelterNames();
         populateShelterSearch();
 
         //set spinners
+        genderSpinner = findViewById(R.id.gender_spinner);
+        ageSpinner = findViewById(R.id.age_spinner);
         addAgeSpinnerListener();
         addGenderSpinnerListener();
 
@@ -87,7 +90,6 @@ public class ShelterListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                         String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
-                        //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
                         String shelter = shelterNames.get(position);
 
                         Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
@@ -102,30 +104,35 @@ public class ShelterListActivity extends AppCompatActivity {
      * class that populates the shelter list --> originally with the data from the database
      */
     private void setShelterNames() {
-        for(String name : MainActivity.shelters.keySet()){
-            shelterNames.add(name);
-        }
+        shelterNames.addAll(MainActivity.shelters.keySet());
+        shelterNames = new ArrayList<>(new HashSet<>(shelterNames));
     }
 
     /**
-     * sets items on age spinner
-     *
+     * sets items on gender spinner and handles events
      */
     private void addGenderSpinnerListener() {
-        genderSpinner = findViewById(R.id.gender_spinner);
+        //Spinner genderSpinner = findViewById(R.id.gender_spinner);
+
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getSelectedItem().toString();
-                if (item.equals("not-specified")) {
-                    setShelterNames();
-                    populateShelterSearch();
-                } else if (item.equals("Male")) {
-                    shelterNames = FilterShelters.filterShelterGender("Men");
-                    populateShelterSearch();
-                } else if (item.equals("Female")) {
-                    shelterNames = FilterShelters.filterShelterGender("Women");
-                    populateShelterSearch();
+                String genderItem = parent.getSelectedItem().toString();
+                String ageItem = ageSpinner.getSelectedItem().toString();
+
+                switch (genderItem) {
+                    case "not-specified":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, ageItem);
+                        populateShelterSearch();
+                        break;
+                    case "Male":
+                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender(), ageItem);
+                        populateShelterSearch();
+                        break;
+                    case "Female":
+                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender(), ageItem);
+                        populateShelterSearch();
+                        break;
                 }
             }
 
@@ -137,27 +144,42 @@ public class ShelterListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * sets items on age spinner and handles events
+     */
     private void addAgeSpinnerListener() {
-        ageSpinner = (Spinner) findViewById(R.id.age_spinner);
+        //Spinner ageSpinner = findViewById(R.id.age_spinner);
+
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getSelectedItem().toString();
-                if (item.equals("not-specified")) {
-                    setShelterNames();
-                    populateShelterSearch();
-                } else if (item.equals("Families w/ newborns")) {
-                    shelterNames = FilterShelters.filterShelterAge("Families w/ newborns");
-                    populateShelterSearch();
-                } else if (item.equals("Children")) {
-                    shelterNames = FilterShelters.filterShelterAge("Children");
-                    populateShelterSearch();
-                } else if (item.equals("Young adults")) {
-                    shelterNames = FilterShelters.filterShelterAge("Young adults");
-                    populateShelterSearch();
-                } else if (item.equals("Anyone")) {
-                    shelterNames = FilterShelters.filterShelterAge("Anyone");
-                    populateShelterSearch();
+                String ageItem = parent.getSelectedItem().toString();
+                String genderItem = genderSpinner.getSelectedItem().toString();
+
+                //convert "Female/Male" shown on spinner to proper string used in controller logic
+                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
+
+                switch (ageItem) {
+                    case "not-specified":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, ageItem);
+                        populateShelterSearch();
+                        break;
+                    case "Families":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.FAMILIES.getAgeGroup());
+                        populateShelterSearch();
+                        break;
+                    case "Children":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.CHILDREN.getAgeGroup());
+                        populateShelterSearch();
+                        break;
+                    case "Young adults":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.YOUNG_ADULTS.getAgeGroup());
+                        populateShelterSearch();
+                        break;
+                    case "Anyone":
+                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.ANYONE.getAgeGroup());
+                        populateShelterSearch();
+                        break;
                 }
             }
 

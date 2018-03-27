@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 
+import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
+import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 import gatech.cs2340.shelterme.shelterme_new.view.MainActivity;
 
@@ -18,7 +20,6 @@ import java.util.Set;
  * This class will get list of shelters from database and can return appropriate shelters
  * based on filters called from search.
  */
-
 public class FilterShelters {
 
     private static Set<String> shelterSet = new HashSet<>();
@@ -27,21 +28,30 @@ public class FilterShelters {
     private static int last = 0;
 
     /**
-     * returns shelters based on gender
+     * returns shelters based on gender or not-specified.
+     * If not specified --> return all shelters.
+     * If Male/Female --> return shelters with specified Male and shelters that don't specify gender
      */
-    public static ArrayList<String> filterShelterGender(final String gender) {
-        //provides the opposite gender passed in --> used in logic to test if a restriction contains
-        // neither "Men" or "Women"
-        shelterSet.clear();
-        String oppositeGender = (gender == "Women") ? "Men" : "Women";
-        Log.d("gender", gender);
-        for (Map.Entry<String, Shelter> entry : shelters.entrySet()) {
-            // if equals the selected gender or doesn't contain either --> done by checking if
-            // opposite gender is present. If it is, don't include.
-            if (entry.getValue().restrictions.matches(gender) ||
-                    (!entry.getValue().restrictions.matches("(.*)" + oppositeGender + "(.*)"))) {
-                Log.d("filterShelterGender", entry.getValue().shelter_name + " " +  entry.getValue().restrictions);
-                shelterSet.add(entry.getKey());
+    public static ArrayList<String> filterShelterGender(String gender) {
+
+        if (gender.equals(Gender.NAN.getGender())) { // if gender == NAN --> add all shelters
+            shelterSet.addAll(shelters.keySet());
+        } else {
+            // provides the opposite gender passed in --> used in logic to test if a restriction contains
+            // neither "Men" or "Women"
+            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ? Gender.MALE.getGender() : Gender.FEMALE.getGender();
+
+            shelterSet = new HashSet<>();
+
+            for (Map.Entry<String, Shelter> entry : shelters.entrySet()) {
+                // if equals the selected gender or doesn't contain either --> done by checking if
+                // opposite gender is present. If it is, don't include.
+
+                if (entry.getValue().getGender().matches(gender) ||
+                        (!entry.getValue().getGender().matches(oppositeGender))) {
+                    shelterSet.add(entry.getKey());
+
+                }
             }
         }
 
@@ -52,12 +62,17 @@ public class FilterShelters {
      * returns shelters based on age
      */
 
-    public static ArrayList<String> filterShelterAge(final String ageGroup) {
-        shelterSet.clear();
+    public static ArrayList<String> filterShelterAge(String ageGroup) {
+        shelterSet = new HashSet<>();
         for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
 
-            // test for children first -->
-            if (entry.getValue().restrictions.matches("(.*)" + ageGroup + "(.*)")) {
+            Boolean restrictBool = false;
+            for (String restriction: entry.getValue().getRestriction_categories()) {
+                if (restriction.equals(ageGroup)) {
+                    restrictBool = true;
+                }
+            }
+            if (restrictBool) {
                 shelterSet.add(entry.getKey());
                 Log.d("filterShelterAge", entry.getValue().shelter_name + " ASDF: " +  entry.getValue().restrictions);
 
@@ -70,10 +85,43 @@ public class FilterShelters {
     /**
      * returns shelter based on age and gender
      */
+    public static ArrayList<String> filterGenderAge(String gender, String ageGroup) {
 
-    public static ArrayList<String> filterGenderAge(final String gender, final String ageGroup) {
-        filterShelterGender(gender);
-        filterShelterGender(ageGroup);
+        //if only gender
+        //if only ageGroup
+        //if both
+        //else return all
+
+        if (!gender.equals(Gender.NAN.getGender()) && ageGroup.equals(AgeGroup.NAN.getAgeGroup())) {
+            filterShelterGender(gender);
+        } else if (!ageGroup.equals(AgeGroup.NAN.getAgeGroup()) && gender.equals(Gender.NAN.getGender())) {
+            filterShelterAge(ageGroup);
+        } else if (!gender.equals(Gender.NAN.getGender()) && !ageGroup.equals(AgeGroup.NAN.getAgeGroup())) {
+            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ? Gender.MALE.getGender() : Gender.FEMALE.getGender();
+            shelterSet = new HashSet<>();
+
+            Log.d("both", gender);
+            Log.d("both", ageGroup);
+            int counter = 0;
+            for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
+                if (entry.getValue().getGender().matches(gender) ||
+                        (!entry.getValue().getGender().matches(oppositeGender))) {
+                    counter++;
+                    Boolean restrictBool = false;
+                    for (String restriction: entry.getValue().getRestriction_categories()) {
+                        if (restriction.equals(ageGroup)) {
+                            restrictBool = true;
+                        }
+                    }
+                    if (restrictBool) {
+                        shelterSet.add(entry.getKey());
+                    }
+                }
+            }
+            Log.d("both", counter + "");
+        } else {
+            shelterSet.addAll(shelters.keySet());
+        }
         return new ArrayList<>(shelterSet);
     }
 }
