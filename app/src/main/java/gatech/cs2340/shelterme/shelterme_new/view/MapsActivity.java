@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
@@ -157,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ageItem = parent.getSelectedItem().toString();
                 String genderItem = genderSpinner.getSelectedItem().toString();
-                
+
                 //convert "Female/Male" shown on spinner to proper string used in controller logic
                 genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
 
