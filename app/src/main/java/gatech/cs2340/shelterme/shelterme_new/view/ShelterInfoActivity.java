@@ -22,6 +22,7 @@ import gatech.cs2340.shelterme.shelterme_new.R;
 public class ShelterInfoActivity extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,19 +50,19 @@ public class ShelterInfoActivity extends AppCompatActivity {
         nameTV.setText(shelterName);
 
         TextView addressTV = findViewById(R.id.address);
-        addressTV.setText("Address: " + MainActivity.shelters.get(shelterName).address);
+        addressTV.setText("Address: " + MainActivity.shelters.get(shelterName).getAddress());
 
         TextView phoneTV = findViewById(R.id.phoneNumber);
-        phoneTV.setText("Phone Number: " + MainActivity.shelters.get(shelterName).phone_number);
+        phoneTV.setText("Phone Number: " + MainActivity.shelters.get(shelterName).getPhone_number());
 
         TextView capacityTV = findViewById(R.id.capacity);
-        capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).capacity);
+        capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).getCapacity());
 
         TextView restrictionsTV = findViewById(R.id.restrictions);
-        restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).restrictions);
+        restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).getRestrictions());
 
         TextView special_notesTV = findViewById(R.id.specialNotes);
-        special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).special_notes);
+        special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).getSpecial_notes());
 
 
     }
@@ -75,10 +76,8 @@ public class ShelterInfoActivity extends AppCompatActivity {
 
     private void updateCapacity() {
         String shelterName = this.getIntent().getExtras().getString("name");
-        int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).capacity);
+        int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
         capacity--;
-        MainActivity.shelters.get(shelterName).capacity = Integer.toString(capacity);
+        MainActivity.shelters.get(shelterName).setCapacity(Integer.toString(capacity));
     }
-
-
 }

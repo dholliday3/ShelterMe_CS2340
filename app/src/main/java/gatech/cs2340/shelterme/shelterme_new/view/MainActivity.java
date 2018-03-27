@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     Shelter shelter = child.getValue(Shelter.class);
-                    shelters.put(shelter.shelter_name, shelter);
+                    shelters.put(shelter.getShelter_name(), shelter);
                 }
 
             }

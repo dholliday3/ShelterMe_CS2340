@@ -74,7 +74,7 @@ public class FilterShelters {
             }
             if (restrictBool) {
                 shelterSet.add(entry.getKey());
-                Log.d("filterShelterAge", entry.getValue().shelter_name + " ASDF: " +  entry.getValue().restrictions);
+                Log.d("filterShelterAge", entry.getValue().getShelter_name() + " ASDF: " +  entry.getValue().getRestrictions());
 
             }
         }
