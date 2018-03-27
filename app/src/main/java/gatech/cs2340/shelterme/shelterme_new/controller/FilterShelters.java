@@ -23,7 +23,9 @@ import java.util.Set;
 public class FilterShelters {
 
     private static Set<String> shelterSet = new HashSet<>();
+    private static Set<String> prevSet = new HashSet<>();
     private static Map<String, Shelter> shelters = MainActivity.shelters;
+    private static int last = 0;
 
     /**
      * returns shelters based on gender or not-specified.
@@ -59,6 +61,7 @@ public class FilterShelters {
     /**
      * returns shelters based on age
      */
+
     public static ArrayList<String> filterShelterAge(String ageGroup) {
         shelterSet = new HashSet<>();
         for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
@@ -71,6 +74,8 @@ public class FilterShelters {
             }
             if (restrictBool) {
                 shelterSet.add(entry.getKey());
+                Log.d("filterShelterAge", entry.getValue().shelter_name + " ASDF: " +  entry.getValue().restrictions);
+
             }
         }
 
