@@ -21,9 +21,10 @@ import java.util.Set;
 
 public class FilterShelters {
 
-    private static ArrayList<String> shelterNames = new ArrayList<>();
     private static Set<String> shelterSet = new HashSet<>();
+    private static Set<String> prevSet = new HashSet<>();
     private static Map<String, Shelter> shelters = MainActivity.shelters;
+    private static int last = 0;
 
     /**
      * returns shelters based on gender
@@ -31,14 +32,15 @@ public class FilterShelters {
     public static ArrayList<String> filterShelterGender(final String gender) {
         //provides the opposite gender passed in --> used in logic to test if a restriction contains
         // neither "Men" or "Women"
+        shelterSet.clear();
         String oppositeGender = (gender == "Women") ? "Men" : "Women";
         Log.d("gender", gender);
         for (Map.Entry<String, Shelter> entry : shelters.entrySet()) {
             // if equals the selected gender or doesn't contain either --> done by checking if
             // opposite gender is present. If it is, don't include.
-            if (entry.getValue().getRestrictions().matches(gender) ||
-                    (!entry.getValue().getRestrictions().matches(oppositeGender))) {
-                Log.d("filterShelter", entry.getValue().getRestrictions());
+            if (entry.getValue().restrictions.matches(gender) ||
+                    (!entry.getValue().restrictions.matches("(.*)" + oppositeGender + "(.*)"))) {
+                Log.d("filterShelterGender", entry.getValue().shelter_name + " " +  entry.getValue().restrictions);
                 shelterSet.add(entry.getKey());
             }
         }
@@ -51,12 +53,14 @@ public class FilterShelters {
      */
 
     public static ArrayList<String> filterShelterAge(final String ageGroup) {
-
+        shelterSet.clear();
         for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
 
             // test for children first -->
-            if (entry.getValue().getRestrictions().matches(ageGroup)) {
+            if (entry.getValue().restrictions.matches("(.*)" + ageGroup + "(.*)")) {
                 shelterSet.add(entry.getKey());
+                Log.d("filterShelterAge", entry.getValue().shelter_name + " ASDF: " +  entry.getValue().restrictions);
+
             }
         }
 

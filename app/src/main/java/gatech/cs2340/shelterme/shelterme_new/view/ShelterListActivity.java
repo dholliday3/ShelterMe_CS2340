@@ -112,7 +112,7 @@ public class ShelterListActivity extends AppCompatActivity {
      *
      */
     private void addGenderSpinnerListener() {
-        genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
+        genderSpinner = findViewById(R.id.gender_spinner);
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -122,9 +122,6 @@ public class ShelterListActivity extends AppCompatActivity {
                     populateShelterSearch();
                 } else if (item.equals("Male")) {
                     shelterNames = FilterShelters.filterShelterGender("Men");
-
-                    Log.d("shelterNames", shelterNames.toString());
-
                     populateShelterSearch();
                 } else if (item.equals("Female")) {
                     shelterNames = FilterShelters.filterShelterGender("Women");
