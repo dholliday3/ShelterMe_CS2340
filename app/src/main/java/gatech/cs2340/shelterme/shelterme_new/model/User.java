@@ -6,9 +6,6 @@ package gatech.cs2340.shelterme.shelterme_new.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.net.PasswordAuthentication;
-import java.util.List;
-
 @IgnoreExtraProperties
 public class User {
     private String account_state;
@@ -22,11 +19,12 @@ public class User {
     private String user_category;
     private String user_name;
     private String veteran;
+    private String uid;
 
 
     public User(String account_state, String beds_reserved, String email, String gender,
                    String name, String password, String phone, String reserved_shelter, String user_category,
-                   String user_name, String veteran){
+                   String user_name, String veteran, String uid) {
         this.account_state = account_state;
         this.beds_reserved = beds_reserved;
         this.email = email;
@@ -38,6 +36,7 @@ public class User {
         this.user_category = user_category;
         this.user_name = user_name;
         this.veteran = veteran;
+        this.uid = uid;
     }
 
     public User() {
@@ -116,4 +115,12 @@ public class User {
     public void setVeteran(String veteran) {
         this.veteran = veteran;
     }
+
+    public String getUid() {
+        return uid;
+    }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
 }
