@@ -125,6 +125,6 @@ public class Shelter {
         return beds;
     }
     public void setBeds(String beds) {
-        this.beds = uid;
+        this.beds = beds;
     }
 }

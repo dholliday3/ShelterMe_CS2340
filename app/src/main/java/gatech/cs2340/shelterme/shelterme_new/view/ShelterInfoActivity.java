@@ -61,8 +61,8 @@ public class ShelterInfoActivity extends AppCompatActivity {
         TextView capacityTV = findViewById(R.id.capacity);
         capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).getCapacity());
 
-//        TextView bedsTV = findViewById(R.id.beds);
-//        bedsTV.setText("Beds: " + MainActivity.shelters.get(shelterName).getBeds());
+        TextView bedsTV = findViewById(R.id.beds);
+        bedsTV.setText("Beds: " + MainActivity.shelters.get(shelterName).getBeds());
 
         TextView restrictionsTV = findViewById(R.id.restrictions);
         restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).getRestrictions());
@@ -74,9 +74,9 @@ public class ShelterInfoActivity extends AppCompatActivity {
         reserveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String shelterID = shelters.get(shelterName).getUid();
-                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
                 capacity--;
-                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+                mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(capacity));
             }
         });
 
@@ -84,9 +84,9 @@ public class ShelterInfoActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
-                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
                 capacity++;
-                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+                mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(capacity));
             }
         });
     }
