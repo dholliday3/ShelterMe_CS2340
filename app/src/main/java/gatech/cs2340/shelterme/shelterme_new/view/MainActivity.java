@@ -11,6 +11,7 @@ import android.view.View;
 
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
+import gatech.cs2340.shelterme.shelterme_new.model.User;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,9 +37,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference mShelter = FirebaseDatabase.getInstance().getReference().child("shelters");
+    DatabaseReference mUser = FirebaseDatabase.getInstance().getReference().child("users");
     public static Map<String, Shelter> shelters = new HashMap<>();
+    public static Map<String, User> users = new HashMap<>();
     private static final String TAG = MainActivity.class.getSimpleName();
     private ValueEventListener mShelterListener;
+    private ValueEventListener mUserListener;
 
     private FirebaseAuth mAuth;
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //populate shelter hashmap
         ValueEventListener shelterListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,6 +103,23 @@ public class MainActivity extends AppCompatActivity {
         };
         mShelter.addValueEventListener(shelterListener);
         mShelterListener = shelterListener;
+
+        //populate user hashmap
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    User user = child.getValue(User.class);
+                    users.put(user.getUser_name(), user);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "User Update failed", databaseError.toException());
+            }
+        };
+        mUser.addValueEventListener(userListener);
+        mUserListener = userListener;
     }
 
 //    public void onStop(){

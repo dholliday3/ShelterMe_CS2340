@@ -61,8 +61,8 @@ public class ShelterInfoActivity extends AppCompatActivity {
         TextView capacityTV = findViewById(R.id.capacity);
         capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).getCapacity());
 
-//        TextView bedsTV = findViewById(R.id.beds);
-//        bedsTV.setText("Beds: " + MainActivity.shelters.get(shelterName).getBeds());
+        TextView bedsTV = findViewById(R.id.beds);
+        bedsTV.setText("Beds: " + MainActivity.shelters.get(shelterName).getBeds());
 
         TextView restrictionsTV = findViewById(R.id.restrictions);
         restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).getRestrictions());
@@ -73,10 +73,13 @@ public class ShelterInfoActivity extends AppCompatActivity {
         Button reserveButton = (Button) findViewById(R.id.reserveBed);
         reserveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String shelterID = shelters.get(shelterName).getUid();
-                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
-                capacity--;
-                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+                String shelterID = MainActivity.shelters.get(shelterName).getUid();
+                int beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
+                beds--;
+                if (beds - 1 < 0) {
+                    beds = 0;
+                }
+                mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
             }
         });
 
@@ -84,9 +87,12 @@ public class ShelterInfoActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
-                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
-                capacity++;
-                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+                int beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
+                beds++;
+                if (beds + 1 > (Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity()))) {
+                    beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+                }
+                mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
             }
         });
     }
