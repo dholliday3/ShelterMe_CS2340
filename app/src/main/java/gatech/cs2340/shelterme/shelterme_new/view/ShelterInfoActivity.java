@@ -20,12 +20,24 @@ import gatech.cs2340.shelterme.shelterme_new.R;
  */
 
 public class ShelterInfoActivity extends AppCompatActivity {
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        //Toolbar stuff.
+        Button reserveBed = (Button) findViewById(R.id.reserveBed);
+        reserveBed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               updateCapacity();
+
+            }
+        });
+
+                //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -33,18 +45,25 @@ public class ShelterInfoActivity extends AppCompatActivity {
 
         //Code that gets information from the ListView.
         String shelterName = this.getIntent().getExtras().getString("name");
+
         TextView nameTV = findViewById(R.id.shelterName_textview);
         nameTV.setText(shelterName);
+
         TextView addressTV = findViewById(R.id.address);
-        addressTV.setText("Address: " + MainActivity.shelters.get(shelterName).address);
+        addressTV.setText("Address: " + MainActivity.shelters.get(shelterName).getAddress());
+
         TextView phoneTV = findViewById(R.id.phoneNumber);
-        phoneTV.setText("Phone Number: " + MainActivity.shelters.get(shelterName).phone_number);
+        phoneTV.setText("Phone Number: " + MainActivity.shelters.get(shelterName).getPhone_number());
+
         TextView capacityTV = findViewById(R.id.capacity);
-        capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).capacity);
+        capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).getCapacity());
+
         TextView restrictionsTV = findViewById(R.id.restrictions);
-        restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).restrictions);
+        restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).getRestrictions());
+
         TextView special_notesTV = findViewById(R.id.specialNotes);
-        special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).special_notes);
+        special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).getSpecial_notes());
+
 
     }
     //Back button.
@@ -53,5 +72,12 @@ public class ShelterInfoActivity extends AppCompatActivity {
         onBackPressed();
         this.finish();
         return true;
+    }
+
+    private void updateCapacity() {
+        String shelterName = this.getIntent().getExtras().getString("name");
+        int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+        capacity--;
+        MainActivity.shelters.get(shelterName).setCapacity(Integer.toString(capacity));
     }
 }

@@ -29,6 +29,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.AuthResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +68,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
      */
     private UserLoginTask mAuthTask = null;
 
+    private FirebaseAuth mAuth;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -74,10 +84,14 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private String _userEnteredPassword;
     private String _userConfirmedPassword;
 
+    private boolean registered;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -95,16 +109,14 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         });
 
         mConfirmedPassView = (EditText) findViewById(R.id.confirmPass);
-        Button mEmailSignInButton = (Button) findViewById(R.id.register_button2);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mRegisterButton = (Button) findViewById(R.id.register_button2);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Log.d("fuck", "fuck");
                 attemptRegister();
-                if (isEmailValid(_userEnteredEmail) && isPasswordValid(_userEnteredPassword)) {
-                    LoginActivity.Credentials.put(_userEnteredEmail, _userEnteredPassword);
-                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
+                //Log.d("boolean registered", String.valueOf(registered));
+
             }
         });
 
@@ -120,7 +132,21 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
     }
+
+
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
+//    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -172,6 +198,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
      * errors are presented and no actual login attempt is made.
      */
     private void attemptRegister() {
+        registered = false;
+
+
         if (mAuthTask != null) {
             return;
         }
@@ -224,6 +253,34 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
         //}
+
+        mAuth.createUserWithEmailAndPassword(_userEnteredEmail, _userConfirmedPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Registration", "createUserWithEmail:success");
+                            registered = true;
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //updateUI(user);
+                            Log.d("registered user", "success");
+                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                            startActivity(intent);
+
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Registration", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     private boolean isEmailValid(String email) {
@@ -361,13 +418,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                 return false;
             }
 
-            for (String credential : LoginActivity.Credentials.keySet()) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+
 
             // TODO: register the new account here.
             return true;
