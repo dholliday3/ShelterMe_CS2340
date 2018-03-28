@@ -18,6 +18,7 @@ import gatech.cs2340.shelterme.shelterme_new.R;
 import java.util.HashSet;
 import java.util.Map;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
+import gatech.cs2340.shelterme.shelterme_new.model.User;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
+import android.app.AlertDialog;
 /**
  * Created by Ally Liu on 2/27/2018.
  */
@@ -35,6 +36,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
 
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private Map<String, Shelter> shelters = MainActivity.shelters;
+    private Map<String, User> users = MainActivity.users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +77,25 @@ public class ShelterInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
                 int beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
-                beds--;
-                if (beds - 1 < 0) {
-                    beds = 0;
+
+                if (users.get("danholli@gmail.com").getReserved_shelter().equals("none") || users.get("danholli@gmail.com").getReserved_shelter().equals(shelterName)) {
+                    //set user data
+                    mDatabase.child("users").child("danholli").child("reserved_shelter").setValue(shelterName);
+                    int num_beds_reserved = Integer.parseInt(MainActivity.users.get("danholli@gmail.com").getBeds_reserved());
+                    num_beds_reserved++;
+                    mDatabase.child("users").child("danholli").child("beds_reserved").setValue(Integer.toString(num_beds_reserved));
+                    //set shelter bed data
+                    beds--;
+                    if (beds - 1 < 0) {
+                        beds = 0;
+                    }
+                    mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(ShelterInfoActivity.this).create();
+                    alertDialog.setTitle("Error");
+                    alertDialog.setMessage("You already have a bed reserved in another shelter! Please cancel before reserving again.");
+                    alertDialog.show();
                 }
-                mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
             }
         });
 
@@ -88,11 +104,14 @@ public class ShelterInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
                 int beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
-                beds++;
-                if (beds + 1 > (Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity()))) {
+                int put_beds_back = Integer.parseInt(users.get("danholli@gmail.com").getBeds_reserved());
+                beds = beds + put_beds_back;
+                if (beds + put_beds_back > (Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity()))) {
                     beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
                 }
                 mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
+                mDatabase.child("users").child("danholli").child("reserved_shelter").setValue("none");
+                mDatabase.child("users").child("danholli").child("beds_reserved").setValue(Integer.toString(0));
             }
         });
     }
