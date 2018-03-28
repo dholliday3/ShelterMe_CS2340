@@ -3,32 +3,38 @@ package gatech.cs2340.shelterme.shelterme_new.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.List;
+
 /**
  * Created by jungwonkang on 3/13/18.
  */
 
 @IgnoreExtraProperties
 public class Shelter {
-    public String address;
-    public String phone_number;
-    public String uid;
-    public String capacity;
-    public String special_notes;
-    public String restrictions;
-    public String shelter_name;
-    public String longitude;
-    public String latitude;
+    private String address;
+    private String phone_number;
+    private String uid;
+    private String capacity;
+    private String special_notes;
+    private String restrictions;
+    private String gender;
+    private List<String> restriction_categories;
+    private String shelter_name;
+    private String longitude;
+    private String latitude;
 
 
     public Shelter(String uid, String address, String phone_number, String capacity,
-                   String special_notes, String restrictions, String shelter_name, String longitude,
-                   String latitude){
+                   String special_notes, String restrictions, String gender, List<String> restriction_categories,
+                   String shelter_name, String longitude, String latitude){
         this.address = address;
         this.uid = uid;
         this.phone_number = phone_number;
         this.capacity = capacity;
         this.special_notes = special_notes;
         this.restrictions = restrictions;
+        this.gender = gender;
+        this.restriction_categories = restriction_categories;
         this.shelter_name = shelter_name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -66,6 +72,12 @@ public class Shelter {
     public void setRestrictions(String restrictions) {
         this.restrictions = restrictions;
     }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+
+    public List<String> getRestriction_categories() { return restriction_categories; }
+    public void setRestriction_categories(List<String> restriction_categories) {this.restriction_categories = restriction_categories; }
 
     public String getLongitude() {
         return longitude;
@@ -106,7 +118,4 @@ public class Shelter {
     public void setPhoneNumber(String phone_number) {
         this.phone_number = phone_number;
     }
-
-
-
 }
