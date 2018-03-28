@@ -22,11 +22,12 @@ public class Shelter {
     private String shelter_name;
     private String longitude;
     private String latitude;
+    private String beds;
 
 
     public Shelter(String uid, String address, String phone_number, String capacity,
                    String special_notes, String restrictions, String gender, List<String> restriction_categories,
-                   String shelter_name, String longitude, String latitude){
+                   String shelter_name, String longitude, String latitude, String beds){
         this.address = address;
         this.uid = uid;
         this.phone_number = phone_number;
@@ -38,6 +39,7 @@ public class Shelter {
         this.shelter_name = shelter_name;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.beds = beds;
 
     }
 
@@ -117,5 +119,12 @@ public class Shelter {
 
     public void setPhoneNumber(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public String getBeds() {
+        return beds;
+    }
+    public void setBeds(String beds) {
+        this.beds = uid;
     }
 }
