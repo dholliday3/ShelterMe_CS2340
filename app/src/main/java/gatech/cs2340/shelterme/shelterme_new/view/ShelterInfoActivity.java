@@ -15,6 +15,17 @@ import android.widget.Toast;
 import android.widget.Button;
 import gatech.cs2340.shelterme.shelterme_new.R;
 
+import java.util.HashSet;
+import java.util.Map;
+import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
 /**
  * Created by Ally Liu on 2/27/2018.
  */
@@ -22,29 +33,21 @@ import gatech.cs2340.shelterme.shelterme_new.R;
 public class ShelterInfoActivity extends AppCompatActivity {
 
 
-
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private Map<String, Shelter> shelters = MainActivity.shelters;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        Button reserveBed = (Button) findViewById(R.id.reserveBed);
-        reserveBed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               updateCapacity();
-
-            }
-        });
-
-                //Toolbar stuff.
+        //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Shelter Page");
 
         //Code that gets information from the ListView.
-        String shelterName = this.getIntent().getExtras().getString("name");
+        final String shelterName = this.getIntent().getExtras().getString("name");
 
         TextView nameTV = findViewById(R.id.shelterName_textview);
         nameTV.setText(shelterName);
@@ -58,13 +61,34 @@ public class ShelterInfoActivity extends AppCompatActivity {
         TextView capacityTV = findViewById(R.id.capacity);
         capacityTV.setText("Capacity: " + MainActivity.shelters.get(shelterName).getCapacity());
 
+//        TextView bedsTV = findViewById(R.id.beds);
+//        bedsTV.setText("Beds: " + MainActivity.shelters.get(shelterName).getBeds());
+
         TextView restrictionsTV = findViewById(R.id.restrictions);
         restrictionsTV.setText("Restrictions: " + MainActivity.shelters.get(shelterName).getRestrictions());
 
         TextView special_notesTV = findViewById(R.id.specialNotes);
         special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).getSpecial_notes());
 
+        Button reserveButton = (Button) findViewById(R.id.reserveBed);
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String shelterID = shelters.get(shelterName).getUid();
+                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+                capacity--;
+                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+            }
+        });
 
+        Button cancelButton = (Button) findViewById(R.id.cancelReserve);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String shelterID = MainActivity.shelters.get(shelterName).getUid();
+                int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
+                capacity++;
+                mDatabase.child("shelters").child(shelterID).child("capacity").setValue(Integer.toString(capacity));
+            }
+        });
     }
     //Back button.
     @Override
@@ -72,12 +96,5 @@ public class ShelterInfoActivity extends AppCompatActivity {
         onBackPressed();
         this.finish();
         return true;
-    }
-
-    private void updateCapacity() {
-        String shelterName = this.getIntent().getExtras().getString("name");
-        int capacity = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
-        capacity--;
-        MainActivity.shelters.get(shelterName).setCapacity(Integer.toString(capacity));
     }
 }
