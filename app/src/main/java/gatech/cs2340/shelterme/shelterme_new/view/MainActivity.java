@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     User user = child.getValue(User.class);
                     users.put(user.getUser_name(), user);
                 }
+                //Log.d("userHash", users.keySet().toString());
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -138,9 +139,11 @@ public class MainActivity extends AppCompatActivity {
     public Map<String, Shelter> getShelters() {
         return shelters;
     }
-
-    //Back button. NOTE: When this back button is pressed, it takes user out of the app.
-    // May want to fix this in the future.
+    
+    /**
+     * Back button, if pressed, it takes the user out of the app.
+     * @return boolean if the button is pressed
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

@@ -364,6 +364,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    /**
+     * if the back button is pressed
+     */
     @Override
     public void onBackPressed() {
         //nothing
