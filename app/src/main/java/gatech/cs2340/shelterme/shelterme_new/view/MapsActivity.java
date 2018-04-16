@@ -26,6 +26,7 @@ import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
 import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 
+@SuppressWarnings("ALL")
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

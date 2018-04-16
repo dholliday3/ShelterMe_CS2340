@@ -6,6 +6,7 @@ package gatech.cs2340.shelterme.shelterme_new.controller;
  * Gets appropriate shelters using selections from search.
  */
 
+@SuppressWarnings("ALL")
 public class ShelterSearch {
 
 
