@@ -1,13 +1,6 @@
 package gatech.cs2340.shelterme.shelterme_new.view;
 
-import android.os.Bundle;
-import android.renderscript.Sampler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
@@ -15,8 +8,6 @@ import gatech.cs2340.shelterme.shelterme_new.model.User;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -30,11 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("PublicMethodNotExposedInInterface")
+
+@SuppressWarnings("ALL")
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference mShelter = FirebaseDatabase.getInstance().getReference().child("shelters");
@@ -51,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button logoutButton = (Button) findViewById(R.id.logout_button);
+        Button logoutButton = findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mapButton = (Button) findViewById(R.id.maps_button);
+        Button mapButton = findViewById(R.id.maps_button);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button searchButton = (Button) findViewById(R.id.search_button);
+        Button searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -17,7 +17,7 @@
     <string name="title_activity_main">Main Activity</string>
     <string name="shelterme">ShelterMe</string>
     <string name="register">register</string>
-    <string name="cancel">cancel</string>
+    <string name="Cancel">Cancel</string>
     <string name="logout">logout</string>
     <string name="search">search</string>
     <string name="sheltername">shelterName</string>

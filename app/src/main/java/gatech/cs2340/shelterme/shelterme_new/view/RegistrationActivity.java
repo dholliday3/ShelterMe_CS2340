@@ -50,7 +50,9 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-@SuppressWarnings("InstanceVariableOfConcreteClass")
+
+@SuppressWarnings("ALL")
+
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
@@ -97,10 +99,10 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -112,8 +114,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             }
         });
 
-        mConfirmedPassView = (EditText) findViewById(R.id.confirmPass);
-        Button mRegisterButton = (Button) findViewById(R.id.register_button2);
+        mConfirmedPassView = findViewById(R.id.confirmPass);
+        Button mRegisterButton = findViewById(R.id.register_button2);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +126,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             }
         });
 
-        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
+        Button mCancelButton = findViewById(R.id.cancel_button);
         mCancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,7 +312,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     /**
      * Shows the progress UI and hides the login form.
      */
-    @SuppressLint("ObsoleteSdkInt")
+
+    @SuppressWarnings("SameParameterValue")
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow

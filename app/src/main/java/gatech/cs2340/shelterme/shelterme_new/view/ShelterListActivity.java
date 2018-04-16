@@ -1,27 +1,19 @@
 package gatech.cs2340.shelterme.shelterme_new.view;
 
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
 import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
@@ -30,21 +22,17 @@ import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 
 /**
  * Created by Ally Liu on 2/26/2018.
  */
 
-@SuppressWarnings({"FeatureEnvy", "PublicMethodNotExposedInInterface"})
+
+@SuppressWarnings("ALL")
+
 public class ShelterListActivity extends AppCompatActivity {
     public static String querySearch = "";
 
@@ -59,7 +47,7 @@ public class ShelterListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shelterlist);
 
         //Toolbar stuff
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
+        Toolbar toolbar = findViewById(R.id.toolbar_shelterlist);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of Shelters");
@@ -82,8 +70,8 @@ public class ShelterListActivity extends AppCompatActivity {
      */
     private void populateShelterSearch() {
         //converts the string array into list object
-        shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelterNames);
-        ListView shelterListView = (ListView) findViewById(R.id.shelterList);
+        shelterListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shelterNames);
+        ListView shelterListView = findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
         shelterListView.setOnItemClickListener(
@@ -198,7 +186,7 @@ public class ShelterListActivity extends AppCompatActivity {
 
     /**
      * Back Button. When pressed, brings the user to the previous page
-     * @return
+     * @return Returns true stating that the back button has been pressed.
      */
     @Override
     public boolean onSupportNavigateUp() {
@@ -210,7 +198,7 @@ public class ShelterListActivity extends AppCompatActivity {
 
     /**
      * Used to handle the search bar.
-     * @param menu
+     * @param menu Menu object representing different filters.
      * @return boolean telling the menu was created
      */
     @Override
@@ -238,10 +226,10 @@ public class ShelterListActivity extends AppCompatActivity {
 
             public boolean onQueryTextSubmit(String query) {
 //              Here u can get the value "query" which is entered in the search box.
-                ArrayList<String> searchedShelter = new ArrayList<String>();
+                ArrayList<String> searchedShelter = new ArrayList<>();
                 searchedShelter.add(query);
-                ListAdapter shelterListAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchedShelter);
-                ListView shelterListView = (ListView) findViewById(R.id.shelterList);
+                ListAdapter shelterListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, searchedShelter);
+                ListView shelterListView = findViewById(R.id.shelterList);
                 shelterListView.setAdapter(shelterListAdapter);
 
                 shelterListView.setOnItemClickListener(

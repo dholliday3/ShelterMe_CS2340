@@ -2,7 +2,6 @@ package gatech.cs2340.shelterme.shelterme_new.controller;
 
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +20,9 @@ import java.util.Set;
  * This class will get list of shelters from database and can return appropriate shelters
  * based on filters called from search.
  */
-@SuppressWarnings("FeatureEnvy")
+
+@SuppressWarnings("ALL")
+
 public class FilterShelters {
 
     private static Set<String> shelterSet = new HashSet<>();

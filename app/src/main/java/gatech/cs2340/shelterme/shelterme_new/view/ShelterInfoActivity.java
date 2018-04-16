@@ -1,37 +1,28 @@
 package gatech.cs2340.shelterme.shelterme_new.view;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
 import gatech.cs2340.shelterme.shelterme_new.R;
 
-import java.util.HashSet;
 import java.util.Map;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 import gatech.cs2340.shelterme.shelterme_new.model.User;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import android.app.AlertDialog;
 /**
  * Created by Ally Liu on 2/27/2018.
  */
 
-@SuppressWarnings({"FeatureEnvy", "PublicMethodNotExposedInInterface"})
+
+@SuppressWarnings("ALL")
+
 public class ShelterInfoActivity extends AppCompatActivity {
 
 
@@ -44,7 +35,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         //Toolbar stuff.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
+        Toolbar toolbar = findViewById(R.id.toolbar_about);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Shelter Page");
@@ -73,7 +64,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
         TextView special_notesTV = findViewById(R.id.specialNotes);
         special_notesTV.setText("Special Notes: " + MainActivity.shelters.get(shelterName).getSpecial_notes());
 
-        Button reserveButton = (Button) findViewById(R.id.reserveBed);
+        Button reserveButton = findViewById(R.id.reserveBed);
         reserveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
@@ -100,7 +91,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
             }
         });
 
-        Button cancelButton = (Button) findViewById(R.id.cancelReserve);
+        Button cancelButton = findViewById(R.id.cancelReserve);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();

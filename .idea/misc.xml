@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.ProfileQuery IS_PRIMARY" />
+      <entry_point TYPE="field" FQNAME="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.UserLoginTask mPassword" />
+      <entry_point TYPE="field" FQNAME="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.UserLoginTask mEmail" />
+      <entry_point TYPE="method" FQNAME="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity$5 void onComplete(com.google.android.gms.tasks.Task&lt;com.google.firebase.auth.AuthResult&gt; task)" />
+      <entry_point TYPE="field" FQNAME="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity registered" />
+    </entry_points>
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.UserLoginTask" method="UserLoginTask" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.UserLoginTask" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity.ProfileQuery" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity" method="attemptRegister" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.view.RegistrationActivity" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setBeds" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setPhoneNumber" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setSpecial_notes" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setAddress" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setLatitude" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setLongitude" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setRestriction_categories" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setGender" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setRestrictions" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setCapacity" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setShelter_name" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" method="setUid" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.Shelter" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setUid" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getUid" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setVeteran" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getVeteran" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setUser_name" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setUser_category" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getUser_category" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setReserved_shelter" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setPhone" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getPhone" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setPassword" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getPassword" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setGender" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getGender" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setName" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getName" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setEmail" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getEmail" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setBeds_reserved" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="setAccount_state" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" method="getAccount_state" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.model.User" />
+    <pattern value="gatech.cs2340.shelterme.shelterme_new.controller.ShelterSearch" />
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
