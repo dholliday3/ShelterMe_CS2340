@@ -27,8 +27,11 @@ public class FilterShelters {
     private static Map<String, Shelter> shelters = MainActivity.shelters;
     private static int last = 0;
 
+
     /**
-     * returns shelters based on gender or not-specified.
+     * Filters shelters based on gender
+     * @param gender gender to filter by
+     * @return returns shelters based on gender or not-specified.
      * If not specified --> return all shelters.
      * If Male/Female --> return shelters with specified Male and shelters that don't specify gender
      */
@@ -58,10 +61,12 @@ public class FilterShelters {
         return new ArrayList<>(shelterSet); // returns ArrayList of set with shelters
     }
 
-    /**
-     * returns shelters based on age
-     */
 
+    /**
+     * Filters and returns shelters based on age
+     * @param ageGroup age group to filter by
+     * @return shelters based on age
+     */
     public static ArrayList<String> filterShelterAge(String ageGroup) {
         shelterSet = new HashSet<>();
         for (Map.Entry<String, Shelter> entry: shelters.entrySet()) {
@@ -74,7 +79,7 @@ public class FilterShelters {
             }
             if (restrictBool) {
                 shelterSet.add(entry.getKey());
-                Log.d("filterShelterAge", entry.getValue().shelter_name + " ASDF: " +  entry.getValue().restrictions);
+                Log.d("filterShelterAge", entry.getValue().getShelter_name() + " ASDF: " +  entry.getValue().getRestrictions());
 
             }
         }
@@ -83,7 +88,10 @@ public class FilterShelters {
     }
 
     /**
-     * returns shelter based on age and gender
+     * Filters the shelters by genders and age group
+     * @param gender which gender to filter by
+     * @param ageGroup which age group to filter by
+     * @return return shelters based on gender and age
      */
     public static ArrayList<String> filterGenderAge(String gender, String ageGroup) {
 

@@ -191,7 +191,10 @@ public class ShelterListActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Back Button. When pressed, brings the user to the previous page
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -200,7 +203,11 @@ public class ShelterListActivity extends AppCompatActivity {
     }
 
 
-    //Handles the Search Bar.
+    /**
+     * Used to handle the search bar.
+     * @param menu
+     * @return boolean telling the menu was created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the options menu from XML

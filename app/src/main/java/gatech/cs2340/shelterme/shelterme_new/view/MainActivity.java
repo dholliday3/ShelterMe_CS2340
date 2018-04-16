@@ -11,6 +11,7 @@ import android.view.View;
 
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
+import gatech.cs2340.shelterme.shelterme_new.model.User;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,9 +37,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference mShelter = FirebaseDatabase.getInstance().getReference().child("shelters");
+    DatabaseReference mUser = FirebaseDatabase.getInstance().getReference().child("users");
     public static Map<String, Shelter> shelters = new HashMap<>();
+    public static Map<String, User> users = new HashMap<>();
     private static final String TAG = MainActivity.class.getSimpleName();
     private ValueEventListener mShelterListener;
+    private ValueEventListener mUserListener;
 
     private FirebaseAuth mAuth;
 
@@ -81,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //populate shelter hashmap
         ValueEventListener shelterListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     Shelter shelter = child.getValue(Shelter.class);
-                    shelters.put(shelter.shelter_name, shelter);
+                    shelters.put(shelter.getShelter_name(), shelter);
                 }
 
             }
@@ -98,6 +103,24 @@ public class MainActivity extends AppCompatActivity {
         };
         mShelter.addValueEventListener(shelterListener);
         mShelterListener = shelterListener;
+
+        //populate user hashmap
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    User user = child.getValue(User.class);
+                    users.put(user.getUser_name(), user);
+                }
+                //Log.d("userHash", users.keySet().toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "User Update failed", databaseError.toException());
+            }
+        };
+        mUser.addValueEventListener(userListener);
+        mUserListener = userListener;
     }
 
 //    public void onStop(){
@@ -116,9 +139,11 @@ public class MainActivity extends AppCompatActivity {
     public Map<String, Shelter> getShelters() {
         return shelters;
     }
-
-    //Back button. NOTE: When this back button is pressed, it takes user out of the app.
-    // May want to fix this in the future.
+    
+    /**
+     * Back button, if pressed, it takes the user out of the app.
+     * @return boolean if the button is pressed
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
