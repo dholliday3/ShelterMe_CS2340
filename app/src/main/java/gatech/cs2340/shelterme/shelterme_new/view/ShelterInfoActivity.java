@@ -116,6 +116,11 @@ public class ShelterInfoActivity extends AppCompatActivity {
         });
     }
     //Back button.
+
+    /**
+     * Back button. When pressed, brings the user to the previous page.
+     * @return boolean when the back button is pressed
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
