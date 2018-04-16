@@ -31,6 +31,7 @@ import android.app.AlertDialog;
  * Created by Ally Liu on 2/27/2018.
  */
 
+@SuppressWarnings({"FeatureEnvy", "PublicMethodNotExposedInInterface"})
 public class ShelterInfoActivity extends AppCompatActivity {
 
 
@@ -105,7 +106,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
                 String shelterID = MainActivity.shelters.get(shelterName).getUid();
                 int beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getBeds());
                 int put_beds_back = Integer.parseInt(users.get("danholli@gmail.com").getBeds_reserved());
-                beds = beds + put_beds_back;
+                beds += put_beds_back;
                 if (beds + put_beds_back > (Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity()))) {
                     beds = Integer.parseInt(MainActivity.shelters.get(shelterName).getCapacity());
                 }
