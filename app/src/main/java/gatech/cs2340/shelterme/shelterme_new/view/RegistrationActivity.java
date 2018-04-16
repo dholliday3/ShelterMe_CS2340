@@ -2,10 +2,12 @@ package gatech.cs2340.shelterme.shelterme_new.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -48,7 +50,9 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
+
 @SuppressWarnings("ALL")
+
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
@@ -67,6 +71,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    @Nullable
     private UserLoginTask mAuthTask = null;
 
     private FirebaseAuth mAuth;
@@ -307,7 +312,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     /**
      * Shows the progress UI and hides the login form.
      */
+
     @SuppressWarnings("SameParameterValue")
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -399,6 +406,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
+    @SuppressLint("StaticFieldLeak")
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -409,6 +417,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             mPassword = password;
         }
 
+        @SuppressWarnings("MagicNumber")
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.

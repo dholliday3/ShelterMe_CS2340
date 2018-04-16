@@ -4,7 +4,9 @@ package gatech.cs2340.shelterme.shelterme_new.model;
  * Created by danielholliday on 3/25/18.
  */
 
+
 @SuppressWarnings("ALL")
+
 public enum AgeGroup {
     FAMILIES ("Families w/ newborns"),
     CHILDREN ("Children"),

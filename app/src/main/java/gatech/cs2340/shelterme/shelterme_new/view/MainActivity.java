@@ -24,7 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @SuppressWarnings("ALL")
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference mShelter = FirebaseDatabase.getInstance().getReference().child("shelters");
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         //populate shelter hashmap
         ValueEventListener shelterListener = new ValueEventListener() {
+            @SuppressWarnings("LocalVariableOfConcreteClass")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         //populate user hashmap
         ValueEventListener userListener = new ValueEventListener() {
+            @SuppressWarnings("LocalVariableOfConcreteClass")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){

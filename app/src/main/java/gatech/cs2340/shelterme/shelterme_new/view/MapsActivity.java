@@ -26,7 +26,9 @@ import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
 import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 
+
 @SuppressWarnings("ALL")
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -71,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressWarnings({"LocalVariableOfConcreteClass", "MagicNumber"})
     @Override
     public void onMapReady(GoogleMap googleMap) {
 

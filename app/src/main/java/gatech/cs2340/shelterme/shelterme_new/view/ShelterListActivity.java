@@ -30,7 +30,9 @@ import java.util.HashSet;
  * Created by Ally Liu on 2/26/2018.
  */
 
+
 @SuppressWarnings("ALL")
+
 public class ShelterListActivity extends AppCompatActivity {
     public static String querySearch = "";
 
@@ -98,10 +100,12 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * sets items on gender spinner and handles events
      */
+    @SuppressWarnings("FeatureEnvy")
     private void addGenderSpinnerListener() {
         //Spinner genderSpinner = findViewById(R.id.gender_spinner);
 
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressWarnings("FeatureEnvy")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String genderItem = parent.getSelectedItem().toString();
@@ -134,10 +138,12 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * sets items on age spinner and handles events
      */
+    @SuppressWarnings("FeatureEnvy")
     private void addAgeSpinnerListener() {
         //Spinner ageSpinner = findViewById(R.id.age_spinner);
 
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressWarnings("FeatureEnvy")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ageItem = parent.getSelectedItem().toString();
@@ -211,6 +217,7 @@ public class ShelterListActivity extends AppCompatActivity {
             searchView.setQueryHint("Search shelters");
         }
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
             public boolean onQueryTextChange(String newText) {
                 // this is your adapter that will be filtered
                 querySearch = newText;
