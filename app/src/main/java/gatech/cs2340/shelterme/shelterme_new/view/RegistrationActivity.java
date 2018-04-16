@@ -271,14 +271,17 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                             Log.d("registered user", "success");
-                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                            Intent intent = new Intent(RegistrationActivity.this,
+                                    LoginActivity.class);
                             startActivity(intent);
 
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("Registration", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                            Log.w("Registration", "createUserWithEmail:failure",
+                                    task.getException());
+                            Toast.makeText(RegistrationActivity.this,
+                                    "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
 
