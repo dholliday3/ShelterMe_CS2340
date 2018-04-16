@@ -70,18 +70,27 @@ public class ShelterListActivity extends AppCompatActivity {
      */
     private void populateShelterSearch() {
         //converts the string array into list object
-        shelterListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, shelterNames);
+        shelterListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                shelterNames);
         ListView shelterListView = findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
         shelterListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position
+                            , long id) {
+                        String shelterClicked = String.valueOf(adapterView
+                                .getItemAtPosition(position));
+                        //gives the strong value of the
+                        // shelter clicked (can be used in about)
+
+
+
                         String shelter = shelterNames.get(position);
 
-                        Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
+                        Intent intent = new Intent(ShelterListActivity.this,
+                                ShelterInfoActivity.class);
                         intent.putExtra("name", shelter);
                         startActivity(intent);
                     }
@@ -117,11 +126,13 @@ public class ShelterListActivity extends AppCompatActivity {
                         populateShelterSearch();
                         break;
                     case "Male":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender(), ageItem);
+                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender()
+                                , ageItem);
                         populateShelterSearch();
                         break;
                     case "Female":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender(), ageItem);
+                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender()
+                                , ageItem);
                         populateShelterSearch();
                         break;
                 }
@@ -150,7 +161,8 @@ public class ShelterListActivity extends AppCompatActivity {
                 String genderItem = genderSpinner.getSelectedItem().toString();
 
                 //convert "Female/Male" shown on spinner to proper string used in controller logic
-                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
+                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() :
+                        Gender.MALE.getGender();
 
                 switch (ageItem) {
                     case "not-specified":
@@ -158,19 +170,23 @@ public class ShelterListActivity extends AppCompatActivity {
                         populateShelterSearch();
                         break;
                     case "Families":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.FAMILIES.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.FAMILIES.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Children":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.CHILDREN.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.CHILDREN.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Young adults":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.YOUNG_ADULTS.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.YOUNG_ADULTS.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Anyone":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.ANYONE.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.ANYONE.getAgeGroup());
                         populateShelterSearch();
                         break;
                 }
@@ -228,19 +244,28 @@ public class ShelterListActivity extends AppCompatActivity {
 //              Here u can get the value "query" which is entered in the search box.
                 ArrayList<String> searchedShelter = new ArrayList<>();
                 searchedShelter.add(query);
-                ListAdapter shelterListAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, searchedShelter);
+                ListAdapter shelterListAdapter = new ArrayAdapter<>(getApplicationContext(),
+                        android.R.layout.simple_list_item_1, searchedShelter);
                 ListView shelterListView = findViewById(R.id.shelterList);
                 shelterListView.setAdapter(shelterListAdapter);
 
                 shelterListView.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                                String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
-                                //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
+                            public void onItemClick(AdapterView<?> adapterView, View view,
+                                                    int position, long id) {
+                                String shelterClicked = String.valueOf(adapterView
+                                        .getItemAtPosition(position));
+                                //gives the strong value of the shelter clicked
+                                // (can be used in about)
+                                //Toast.makeText(ShelterListActivity.this,
+                                // shelterClicked, Toast.LENGTH_LONG).show();
+
+
                                 String shelter = shelterNames.get(position);
 
-                                Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
+                                Intent intent = new Intent(ShelterListActivity.this,
+                                        ShelterInfoActivity.class);
                                 intent.putExtra("name", shelter);
                                 startActivity(intent);
                             }

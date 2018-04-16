@@ -9,7 +9,9 @@ import java.util.List;
  * Created by jungwonkang on 3/13/18.
  */
 
+
 @SuppressWarnings("ALL")
+
 @IgnoreExtraProperties
 public class Shelter {
     private String address;

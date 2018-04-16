@@ -43,9 +43,11 @@ public class FilterShelters {
         if (gender.equals(Gender.NAN.getGender())) { // if gender == NAN --> add all shelters
             shelterSet.addAll(shelters.keySet());
         } else {
-            // provides the opposite gender passed in --> used in logic to test if a restriction contains
+            // provides the opposite gender passed in --> used in logic to test if a restriction
+            // contains
             // neither "Men" or "Women"
-            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ? Gender.MALE.getGender() : Gender.FEMALE.getGender();
+            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ?
+                    Gender.MALE.getGender() : Gender.FEMALE.getGender();
 
             shelterSet = new HashSet<>();
 
@@ -82,7 +84,8 @@ public class FilterShelters {
             }
             if (restrictBool) {
                 shelterSet.add(entry.getKey());
-                Log.d("filterShelterAge", entry.getValue().getShelter_name() + " ASDF: " +  entry.getValue().getRestrictions());
+                Log.d("filterShelterAge", entry.getValue().getShelter_name() +
+                        " ASDF: " +  entry.getValue().getRestrictions());
 
             }
         }
@@ -105,10 +108,13 @@ public class FilterShelters {
 
         if (!gender.equals(Gender.NAN.getGender()) && ageGroup.equals(AgeGroup.NAN.getAgeGroup())) {
             filterShelterGender(gender);
-        } else if (!ageGroup.equals(AgeGroup.NAN.getAgeGroup()) && gender.equals(Gender.NAN.getGender())) {
+        } else if (!ageGroup.equals(AgeGroup.NAN.getAgeGroup()) && gender
+                .equals(Gender.NAN.getGender())) {
             filterShelterAge(ageGroup);
-        } else if (!gender.equals(Gender.NAN.getGender()) && !ageGroup.equals(AgeGroup.NAN.getAgeGroup())) {
-            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ? Gender.MALE.getGender() : Gender.FEMALE.getGender();
+        } else if (!gender.equals(Gender.NAN.getGender()) && !ageGroup
+                .equals(AgeGroup.NAN.getAgeGroup())) {
+            String oppositeGender = (gender.equals(Gender.FEMALE.getGender())) ?
+                    Gender.MALE.getGender() : Gender.FEMALE.getGender();
             shelterSet = new HashSet<>();
 
             Log.d("both", gender);
