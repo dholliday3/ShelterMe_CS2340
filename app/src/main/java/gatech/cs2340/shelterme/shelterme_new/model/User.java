@@ -6,7 +6,10 @@ package gatech.cs2340.shelterme.shelterme_new.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-@SuppressWarnings("PublicMethodNotExposedInInterface")
+/**
+ * Class representing a User.
+ */
+@SuppressWarnings("ALL")
 @IgnoreExtraProperties
 public class User {
     private String account_state;
