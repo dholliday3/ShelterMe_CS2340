@@ -1,27 +1,19 @@
 package gatech.cs2340.shelterme.shelterme_new.view;
 
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 import gatech.cs2340.shelterme.shelterme_new.R;
 import gatech.cs2340.shelterme.shelterme_new.controller.FilterShelters;
 import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
@@ -30,19 +22,20 @@ import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 
 
 /**
  * Created by Ally Liu on 2/26/2018.
  */
+
+
+@SuppressWarnings("ALL")
 
 public class ShelterListActivity extends AppCompatActivity {
     public static String querySearch = "";
@@ -58,7 +51,7 @@ public class ShelterListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shelterlist);
 
         //Toolbar stuff
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_shelterlist);
+        Toolbar toolbar = findViewById(R.id.toolbar_shelterlist);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of Shelters");
@@ -81,18 +74,27 @@ public class ShelterListActivity extends AppCompatActivity {
      */
     private void populateShelterSearch() {
         //converts the string array into list object
-        shelterListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, shelterNames);
-        ListView shelterListView = (ListView) findViewById(R.id.shelterList);
+        shelterListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                shelterNames);
+        ListView shelterListView = findViewById(R.id.shelterList);
         shelterListView.setAdapter(shelterListAdapter);
 
         shelterListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position
+                            , long id) {
+                        String shelterClicked = String.valueOf(adapterView
+                                .getItemAtPosition(position));
+                        //gives the strong value of the
+                        // shelter clicked (can be used in about)
+
+
+
                         String shelter = shelterNames.get(position);
 
-                        Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
+                        Intent intent = new Intent(ShelterListActivity.this,
+                                ShelterInfoActivity.class);
                         intent.putExtra("name", shelter);
                         startActivity(intent);
                     }
@@ -111,10 +113,12 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * sets items on gender spinner and handles events
      */
+    @SuppressWarnings("FeatureEnvy")
     private void addGenderSpinnerListener() {
         //Spinner genderSpinner = findViewById(R.id.gender_spinner);
 
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressWarnings("FeatureEnvy")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String genderItem = parent.getSelectedItem().toString();
@@ -126,11 +130,13 @@ public class ShelterListActivity extends AppCompatActivity {
                         populateShelterSearch();
                         break;
                     case "Male":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender(), ageItem);
+                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender()
+                                , ageItem);
                         populateShelterSearch();
                         break;
                     case "Female":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender(), ageItem);
+                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender()
+                                , ageItem);
                         populateShelterSearch();
                         break;
                 }
@@ -147,17 +153,20 @@ public class ShelterListActivity extends AppCompatActivity {
     /**
      * sets items on age spinner and handles events
      */
+    @SuppressWarnings("FeatureEnvy")
     private void addAgeSpinnerListener() {
         //Spinner ageSpinner = findViewById(R.id.age_spinner);
 
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressWarnings("FeatureEnvy")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ageItem = parent.getSelectedItem().toString();
                 String genderItem = genderSpinner.getSelectedItem().toString();
 
                 //convert "Female/Male" shown on spinner to proper string used in controller logic
-                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
+                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() :
+                        Gender.MALE.getGender();
 
                 switch (ageItem) {
                     case "not-specified":
@@ -165,19 +174,23 @@ public class ShelterListActivity extends AppCompatActivity {
                         populateShelterSearch();
                         break;
                     case "Families":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.FAMILIES.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.FAMILIES.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Children":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.CHILDREN.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.CHILDREN.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Young adults":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.YOUNG_ADULTS.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.YOUNG_ADULTS.getAgeGroup());
                         populateShelterSearch();
                         break;
                     case "Anyone":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.ANYONE.getAgeGroup());
+                        shelterNames = FilterShelters.filterGenderAge(genderItem,
+                                AgeGroup.ANYONE.getAgeGroup());
                         populateShelterSearch();
                         break;
                 }
@@ -193,7 +206,7 @@ public class ShelterListActivity extends AppCompatActivity {
 
     /**
      * Back Button. When pressed, brings the user to the previous page
-     * @return
+     * @return Returns true stating that the back button has been pressed.
      */
     @Override
     public boolean onSupportNavigateUp() {
@@ -205,7 +218,7 @@ public class ShelterListActivity extends AppCompatActivity {
 
     /**
      * Used to handle the search bar.
-     * @param menu
+     * @param menu Menu object representing different filters.
      * @return boolean telling the menu was created
      */
     @Override
@@ -224,6 +237,7 @@ public class ShelterListActivity extends AppCompatActivity {
             searchView.setQueryHint("Search shelters");
         }
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
             public boolean onQueryTextChange(String newText) {
                 // this is your adapter that will be filtered
                 querySearch = newText;
@@ -232,21 +246,30 @@ public class ShelterListActivity extends AppCompatActivity {
 
             public boolean onQueryTextSubmit(String query) {
 //              Here u can get the value "query" which is entered in the search box.
-                ArrayList<String> searchedShelter = new ArrayList<String>();
+                ArrayList<String> searchedShelter = new ArrayList<>();
                 searchedShelter.add(query);
-                ListAdapter shelterListAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, searchedShelter);
-                ListView shelterListView = (ListView) findViewById(R.id.shelterList);
+                ListAdapter shelterListAdapter = new ArrayAdapter<>(getApplicationContext(),
+                        android.R.layout.simple_list_item_1, searchedShelter);
+                ListView shelterListView = findViewById(R.id.shelterList);
                 shelterListView.setAdapter(shelterListAdapter);
 
                 shelterListView.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                                String shelterClicked = String.valueOf(adapterView.getItemAtPosition(position)); //gives the strong value of the shelter clicked (can be used in about)
-                                //Toast.makeText(ShelterListActivity.this, shelterClicked, Toast.LENGTH_LONG).show();
+                            public void onItemClick(AdapterView<?> adapterView, View view,
+                                                    int position, long id) {
+                                String shelterClicked = String.valueOf(adapterView
+                                        .getItemAtPosition(position));
+                                //gives the strong value of the shelter clicked
+                                // (can be used in about)
+                                //Toast.makeText(ShelterListActivity.this,
+                                // shelterClicked, Toast.LENGTH_LONG).show();
+
+
                                 String shelter = shelterNames.get(position);
 
-                                Intent intent = new Intent(ShelterListActivity.this, ShelterInfoActivity.class);
+                                Intent intent = new Intent(ShelterListActivity.this,
+                                        ShelterInfoActivity.class);
                                 intent.putExtra("name", shelter);
                                 startActivity(intent);
                             }
