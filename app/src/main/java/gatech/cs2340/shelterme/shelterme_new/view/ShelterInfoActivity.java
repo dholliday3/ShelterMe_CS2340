@@ -15,6 +15,13 @@ import gatech.cs2340.shelterme.shelterme_new.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.ValueEventListener;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.widget.EditText;
+
+
 import android.app.AlertDialog;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -32,10 +39,12 @@ public class ShelterInfoActivity extends AppCompatActivity {
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private Map<String, Shelter> shelters = MainActivity.shelters;
     private Map<String, User> users = MainActivity.users;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
 
         //Toolbar stuff.
         Toolbar toolbar = findViewById(R.id.toolbar_about);
@@ -92,8 +101,16 @@ public class ShelterInfoActivity extends AppCompatActivity {
                     if (beds - 1 < 0) {
                         beds = 0;
                     }
+
                     mDatabase.child("shelters").child(shelterID).child("beds")
                             .setValue(Integer.toString(beds));
+
+                    if (beds - 1 < 5) {
+                        Intent intent = new Intent(ShelterInfoActivity.this, NotifActivity.class);
+                        startActivity(intent);
+                    }
+                    mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
+
                 } else {
                     AlertDialog alertDialog = new AlertDialog
                             .Builder(ShelterInfoActivity.this).create();
