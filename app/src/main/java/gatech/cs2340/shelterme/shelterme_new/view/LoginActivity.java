@@ -38,6 +38,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,8 +81,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private String _userEnteredPassword;
 
     private FirebaseAuth mAuth;
-
     private boolean loggedIn;
+
+    /**
+     * used for incorrect attempts
+     */
+    private String previousAttemptPassword;
+    private String dbUserName;
+    private int attemptedTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +197,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void attemptLogin() {
         loggedIn = false;
 
+        // query database for incorrect login attempts and userID
+        setUserID();
+        getAttempts();
+
+        Log.d("scope", dbUserName);
+        // test update attempts
+        updateIncorrectAttempts();
+
+
         if (mAuthTask != null) {
+            return;
+        }
+
+        // check if user tried 3 times incorrectly and is locked out
+        if (isLockedOut()) {
+            // TODO - throw error message
             return;
         }
 
@@ -248,6 +274,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             Log.w("login", "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+
+                            // update incorrect attempt --> don't update if previous password is same as current try
+                            //updateIncorrectAttempts();
                             //updateUI(null);
                         }
 
@@ -362,6 +391,74 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+    /**
+     * Logic for incorrect attempts
+     */
+    private boolean isLockedOut() {
+        if (attemptedTimes >= 3) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * get current user
+     */
+    private void getAttempts() {
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("users");
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userNameKey: dataSnapshot.getChildren()) {
+                    if (userNameKey.child("email").getValue().toString().equals(_userEnteredEmail)) {
+                        attemptedTimes = Integer.parseInt(userNameKey.child("incorrect_login_attempts").getValue().toString());
+                        Log.d("db", attemptedTimes + "");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * get userId
+     */
+    private void setUserID() {
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("users");
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userNameKey: dataSnapshot.getChildren()) {
+                    if (userNameKey.child("email").getValue().toString().equals(_userEnteredEmail)) {
+                        dbUserName = userNameKey.getKey();
+                        Log.d("dbUserName", dbUserName);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * update incorrect_login_attempts
+     */
+    private void updateIncorrectAttempts() {
+        DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("users");//.child(dbUserName);
+        String test = dbReference.child(dbUserName).getKey();
+        Log.d("db_child", test);
+        //dbReference.child("incorrect_login_attempts").setValue(attemptedTimes++);
+        //getAttempts();
+        //Log.d("increment", attemptedTimes + "");
     }
 
     /**
