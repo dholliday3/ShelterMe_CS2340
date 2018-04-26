@@ -63,7 +63,7 @@
         <activity
             android:name=".view.MapsActivity"
             android:label="@string/title_activity_maps" />
-              
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
@@ -79,14 +79,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="@string/fb_login_protocol_scheme" />
-        <activity
-            android:name=".view.NotifActivity"
-            android:label="@string/title_activity_notif"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            
         </activity>
 
     </application>
