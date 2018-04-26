@@ -25,6 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.widget.EditText;
 
 import android.app.AlertDialog;
 /**
@@ -37,10 +41,12 @@ public class ShelterInfoActivity extends AppCompatActivity {
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private Map<String, Shelter> shelters = MainActivity.shelters;
     private Map<String, User> users = MainActivity.users;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+
 
         //Toolbar stuff.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
@@ -112,6 +118,14 @@ public class ShelterInfoActivity extends AppCompatActivity {
                 mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
                 mDatabase.child("users").child("danholli").child("reserved_shelter").setValue("none");
                 mDatabase.child("users").child("danholli").child("beds_reserved").setValue(Integer.toString(0));
+            }
+        });
+        Button notifButton = (Button) findViewById(R.id.notifbutton);
+        notifButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShelterInfoActivity.this, NotifActivity.class);
+                startActivity(intent);
             }
         });
     }
