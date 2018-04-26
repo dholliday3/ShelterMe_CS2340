@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 import gatech.cs2340.shelterme.shelterme_new.R;
+import android.content.Intent;
 
 import java.util.Map;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
@@ -23,8 +24,8 @@ import android.widget.EditText;
 
 
 import android.app.AlertDialog;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+//import com.facebook.FacebookSdk;
+//import com.facebook.appevents.AppEventsLogger;
 
 /**
  * Created by Ally Liu on 2/27/2018.
