@@ -95,6 +95,10 @@ public class ShelterInfoActivity extends AppCompatActivity {
                     if (beds - 1 < 0) {
                         beds = 0;
                     }
+                    if (beds - 1 < 5) {
+                        Intent intent = new Intent(ShelterInfoActivity.this, NotifActivity.class);
+                        startActivity(intent);
+                    }
                     mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(ShelterInfoActivity.this).create();
@@ -118,14 +122,6 @@ public class ShelterInfoActivity extends AppCompatActivity {
                 mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
                 mDatabase.child("users").child("danholli").child("reserved_shelter").setValue("none");
                 mDatabase.child("users").child("danholli").child("beds_reserved").setValue(Integer.toString(0));
-            }
-        });
-        Button notifButton = (Button) findViewById(R.id.notifbutton);
-        notifButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ShelterInfoActivity.this, NotifActivity.class);
-                startActivity(intent);
             }
         });
     }

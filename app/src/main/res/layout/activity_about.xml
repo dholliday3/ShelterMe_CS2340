@@ -122,15 +122,6 @@ android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/specialNotes"
         tools:layout_editor_absoluteX="71dp" />
 
-    <Button
-        android:id="@+id/notifbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        android:text="Send Alert"
-        app:layout_constraintTop_toBottomOf="@id/specialNotes"
-        tools:layout_editor_absoluteX="71dp" />
-
 
 </android.support.constraint.ConstraintLayout>
 

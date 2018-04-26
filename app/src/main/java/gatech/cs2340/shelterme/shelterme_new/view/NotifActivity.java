@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.content.Intent;
+
 
 import gatech.cs2340.shelterme.shelterme_new.R;
 
@@ -43,7 +45,20 @@ public class NotifActivity extends AppCompatActivity {
 
                 notify.flags |= Notification.FLAG_AUTO_CANCEL;
                 notif.notify(0, notify);
+
+
             }
         });
+    }
+
+    /**
+     * Back button. When pressed, brings the user to the previous page.
+     * @return boolean when the back button is pressed
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        this.finish();
+        return true;
     }
 }
