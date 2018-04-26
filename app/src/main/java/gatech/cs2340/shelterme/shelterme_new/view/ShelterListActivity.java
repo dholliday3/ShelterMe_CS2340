@@ -25,6 +25,10 @@ import android.view.MenuInflater;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
 
 /**
  * Created by Ally Liu on 2/26/2018.

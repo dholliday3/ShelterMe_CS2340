@@ -26,6 +26,10 @@ import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
 import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
 
 @SuppressWarnings("ALL")
 
