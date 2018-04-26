@@ -1,11 +1,15 @@
 package gatech.cs2340.shelterme.shelterme_new.model;
 
-/**
- * Created by jungwonkang on 3/13/18.
+/*
+  Created by jungwonkang on 3/13/18.
  */
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+/**
+ * Class representing a User.
+ */
+@SuppressWarnings("ALL")
 @IgnoreExtraProperties
 public class User {
     private String account_state;
@@ -37,7 +41,8 @@ public class User {
      * @param uid user id
      */
     public User(String account_state, String beds_reserved, String email, String gender,
-                   String name, String password, String phone, String reserved_shelter, String user_category,
+                   String name, String password, String phone, String reserved_shelter,
+                String user_category,
                    String user_name, String veteran, String uid) {
         this.account_state = account_state;
         this.beds_reserved = beds_reserved;

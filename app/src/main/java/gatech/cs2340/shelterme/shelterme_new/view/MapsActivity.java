@@ -26,6 +26,13 @@ import gatech.cs2340.shelterme.shelterme_new.model.AgeGroup;
 import gatech.cs2340.shelterme.shelterme_new.model.Gender;
 import gatech.cs2340.shelterme.shelterme_new.model.Shelter;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
+
+@SuppressWarnings("ALL")
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -70,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressWarnings({"LocalVariableOfConcreteClass", "MagicNumber"})
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -80,7 +88,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         List<String> keys = new ArrayList<>(shelters.keySet());
         String randKey = keys.get(rand.nextInt(keys.size()));
         Shelter randVal = shelters.get(randKey);
-        LatLng cameraLocation = new LatLng(Double.parseDouble(randVal.getLatitude()), Double.parseDouble(randVal.getLongitude()));
+        LatLng cameraLocation = new LatLng(Double.parseDouble(randVal.getLatitude()),
+                Double.parseDouble(randVal.getLongitude()));
 
         populateSheltersOnMap();
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cameraLocation, 11.0f));
@@ -102,7 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat = Double.parseDouble(shelters.get(shelter).getLatitude());
             lon = Double.parseDouble(shelters.get(shelter).getLongitude());
             location = new LatLng(lat, lon);
-            mMap.addMarker(new MarkerOptions().position(location).title(shelters.get(shelter).getShelter_name()));
+            mMap.addMarker(new MarkerOptions().position(location)
+                    .title(shelters.get(shelter).getShelter_name()));
         }
     }
 
@@ -126,11 +136,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         populateSheltersOnMap();
                         break;
                     case "Male":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.MALE.getGender(), ageItem);
+                        shelterNames = FilterShelters
+                                .filterGenderAge(Gender.MALE.getGender(), ageItem);
                         populateSheltersOnMap();
                         break;
                     case "Female":
-                        shelterNames = FilterShelters.filterGenderAge(Gender.FEMALE.getGender(), ageItem);
+                        shelterNames = FilterShelters
+                                .filterGenderAge(Gender.FEMALE.getGender(), ageItem);
                         populateSheltersOnMap();
                         break;
                 }
@@ -158,7 +170,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String genderItem = genderSpinner.getSelectedItem().toString();
 
                 //convert "Female/Male" shown on spinner to proper string used in controller logic
-                genderItem = (genderItem.equals("Female")) ? Gender.FEMALE.getGender() : Gender.MALE.getGender();
+                genderItem = (genderItem.equals("Female")) ?
+                        Gender.FEMALE.getGender() : Gender.MALE.getGender();
 
                 switch (ageItem) {
                     case "not-specified":
@@ -166,19 +179,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         populateSheltersOnMap();
                         break;
                     case "Families":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.FAMILIES.getAgeGroup());
+                        shelterNames = FilterShelters
+                                .filterGenderAge(genderItem, AgeGroup.FAMILIES.getAgeGroup());
                         populateSheltersOnMap();
                         break;
                     case "Children":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.CHILDREN.getAgeGroup());
+                        shelterNames = FilterShelters
+                                .filterGenderAge(genderItem, AgeGroup.CHILDREN.getAgeGroup());
                         populateSheltersOnMap();
                         break;
                     case "Young adults":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.YOUNG_ADULTS.getAgeGroup());
+                        shelterNames = FilterShelters
+                                .filterGenderAge(genderItem, AgeGroup.YOUNG_ADULTS.getAgeGroup());
                         populateSheltersOnMap();
                         break;
                     case "Anyone":
-                        shelterNames = FilterShelters.filterGenderAge(genderItem, AgeGroup.ANYONE.getAgeGroup());
+                        shelterNames = FilterShelters
+                                .filterGenderAge(genderItem, AgeGroup.ANYONE.getAgeGroup());
                         populateSheltersOnMap();
                         break;
                 }

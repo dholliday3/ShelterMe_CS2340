@@ -9,6 +9,9 @@ import java.util.List;
  * Created by jungwonkang on 3/13/18.
  */
 
+
+@SuppressWarnings("ALL")
+
 @IgnoreExtraProperties
 public class Shelter {
     private String address;
@@ -145,7 +148,7 @@ public class Shelter {
      * getter for the restriction categories of the shelter
      * @return List of the different categories
      */
-    public List<String> getRestriction_categories() { return restriction_categories; }
+    public Iterable<String> getRestriction_categories() { return restriction_categories; }
 
     /**
      * setter for the restriction categories of the shelter
