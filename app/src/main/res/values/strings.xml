@@ -44,5 +44,10 @@
 
     <string name="search_hint">Search shelters</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_notif">NotifActivity</string>
+
+    <string name="facebook_app_id">180768559243118</string>
+    <string name="fb_login_protocol_scheme">fb180768559243118</string>
+
 
 </resources>

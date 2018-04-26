@@ -47,6 +47,10 @@ import gatech.cs2340.shelterme.shelterme_new.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
 /**
  * A login screen that offers login via email/password.
  */
