@@ -89,6 +89,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private String previousAttemptPassword;
     private String dbUserName;
     private int attemptedTimes;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // current user
+    private String userEmail;
+    boolean emailVerified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         mAuth = FirebaseAuth.getInstance();
+
+        // set current user email
+        setUserEmail();
+        Log.d("email", " " + userEmail);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -140,6 +147,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
             }
         });
+
+        Button mResetPasswordButton = (Button) findViewById(R.id.reset_password_button);
+        mResetPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("reset","made it to reset");
+                sendResetEmail();
+            }
+        });
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -198,12 +215,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loggedIn = false;
 
         // query database for incorrect login attempts and userID
-        setUserID();
-        getAttempts();
+        //setUserID();
+        //getAttempts();
 
-        Log.d("scope", dbUserName);
+        //Log.d("scope", dbUserName);
         // test update attempts
-        updateIncorrectAttempts();
+        //updateIncorrectAttempts();
 
 
         if (mAuthTask != null) {
@@ -211,10 +228,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // check if user tried 3 times incorrectly and is locked out
-        if (isLockedOut()) {
-            // TODO - throw error message
-            return;
-        }
+//        if (isLockedOut()) {
+//            // TODO - throw error message
+//            return;
+//        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -392,6 +409,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
+
+    /**
+     * get current user info
+     */
+    private void setUserEmail() {
+
+        if (user != null) {
+            // correct way of doing this
+            userEmail = user.getEmail();
+            emailVerified = user.isEmailVerified();
+        }
+    }
+
+    /**
+     * send reset email
+     */
+    private void sendResetEmail() {
+        _userEnteredEmail = mEmailView.getText().toString();
+        final Boolean[] holder = new Boolean[]{false};
+
+        if (!_userEnteredEmail.equals("")) {
+            boolean resetCompleted = false;
+            Log.d("reset", "" + _userEnteredEmail);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            mAuth.sendPasswordResetEmail(_userEnteredEmail)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("reset email", "Email sent.");
+                                holder[0] = true;
+                            }
+                        }
+                    });
+        }
+        if (!holder[0]) {
+            Toast.makeText(LoginActivity.this, "Reset Failed. Must Be Registered.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
 
     /**
      * Logic for incorrect attempts
