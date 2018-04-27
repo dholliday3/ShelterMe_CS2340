@@ -24,6 +24,7 @@
     <string name="address">address</string>
     <string name="capacity">capacity</string>
     <string name="restrictions">restrictions</string>
+    <string name="reset_password">reset password</string>
     <string name="specialnotes">specialNotes</string>
 
     <string name="filter_search">filters</string>

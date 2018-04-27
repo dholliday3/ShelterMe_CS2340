@@ -49,6 +49,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logInfo;
 
 
 /**
@@ -275,6 +276,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                             Log.d("registered user", "success");
+                            logInfo(_userEnteredEmail, "ACTION: new user registered");
                             Intent intent = new Intent(RegistrationActivity.this,
                                     LoginActivity.class);
                             startActivity(intent);
@@ -284,6 +286,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             // If sign in fails, display a message to the user.
                             Log.w("Registration", "createUserWithEmail:failure",
                                     task.getException());
+                            logInfo(_userEnteredEmail, "ACTION: new user attempted to register but authentication failed");
                             Toast.makeText(RegistrationActivity.this,
                                     "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

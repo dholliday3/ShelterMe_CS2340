@@ -54,6 +54,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logInfo;
 
 
 /**
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Email and password entered by user
      */
-    private String _userEnteredEmail;
+    public static String _userEnteredEmail;
     private String _userEnteredPassword;
 
     private FirebaseAuth mAuth;
@@ -152,16 +153,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mAuth = FirebaseAuth.getInstance();
 
         mPasswordView = findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setText("Login");
@@ -189,6 +190,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button mResetPasswordButton = (Button) findViewById(R.id.reset_password_button);
+        mResetPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("reset","made it to reset");
+                sendResetEmail();
             }
         });
 
@@ -283,6 +293,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmailView.setError("This field is required");
             focusView = mEmailView;
             cancel = true;
+            //return;
         } else if (!isEmailValid(_userEnteredEmail)) {
             mEmailView.setError("This email is invalid");
             focusView = mEmailView;
@@ -296,34 +307,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
+            Log.d("hello", "hello");
             mAuthTask = new UserLoginTask(_userEnteredEmail, _userEnteredPassword);
             mAuthTask.execute((Void) null);
-        }
 
-        mAuth.signInWithEmailAndPassword(_userEnteredEmail, _userEnteredPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("login", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                            loggedIn = true;
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("login", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+            Log.d("trying to login", "true");
+            Log.d("email:", _userEnteredEmail);
+            Log.d("pass:", _userEnteredPassword);
+
+
+            mAuth.signInWithEmailAndPassword(_userEnteredEmail, _userEnteredPassword)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d("hey", "hey");
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("login", "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                                loggedIn = true;
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                logInfo(_userEnteredEmail, "ACTION: user login");
+                                startActivity(intent);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("login", "signInWithEmail:failure", task.getException());
+                                logInfo(_userEnteredEmail, "ACTION: user attempted to log in but authentication failed");
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                //updateUI(null);
+                            }
+
+                            // ...
                         }
-
-                        // ...
-                    }
-                });
+                    });
+        }
+        Log.d("end", "end");
     }
 
     private boolean isEmailValid(String email) {
@@ -426,6 +448,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
+
+    /**
+     * send reset email
+     */
+    private void sendResetEmail() {
+        _userEnteredEmail = mEmailView.getText().toString();
+        final Boolean[] holder = new Boolean[]{false};
+
+        if (!_userEnteredEmail.equals("")) {
+            boolean resetCompleted = false;
+            Log.d("reset", "" + _userEnteredEmail);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            mAuth.sendPasswordResetEmail(_userEnteredEmail)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("reset email", "Email sent.");
+                                holder[0] = true;
+                            }
+                        }
+                    });
+        }
+        if (!holder[0]) {
+            Toast.makeText(LoginActivity.this, "Reset Failed. Must Be Registered.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     /**
      * if the back button is pressed

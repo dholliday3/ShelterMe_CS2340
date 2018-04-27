@@ -99,6 +99,12 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/Cancel" />
 
+            <Button
+                android:id="@+id/reset_password_button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/reset_password" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
