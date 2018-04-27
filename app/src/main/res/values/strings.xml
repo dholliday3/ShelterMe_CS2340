@@ -25,7 +25,7 @@
     <string name="capacity">capacity</string>
     <string name="restrictions">restrictions</string>
     <string name="specialnotes">specialNotes</string>
-
+    <string name="reset_password">reset password</string>
     <string name="filter_search">filters</string>
 
     <!-- String arrays for search filter spinners -->

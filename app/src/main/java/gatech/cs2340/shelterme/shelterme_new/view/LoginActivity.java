@@ -144,9 +144,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        boolean isLoggedIn = accessToken == null;
 //        boolean isExpired = accessToken.isExpired();
 
-
-
-
+        Button mResetPasswordButton = (Button) findViewById(R.id.reset_password_button);
+        mResetPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("reset","made it to reset");
+                sendResetEmail();
+            }
+        });
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -425,6 +430,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+    /**
+     * send reset email
+     */
+    private void sendResetEmail() {
+        _userEnteredEmail = mEmailView.getText().toString();
+        final Boolean[] holder = new Boolean[]{false};
+
+        if (!_userEnteredEmail.equals("")) {
+            boolean resetCompleted = false;
+            Log.d("reset", "" + _userEnteredEmail);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            mAuth.sendPasswordResetEmail(_userEnteredEmail)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("reset email", "Email sent.");
+                                holder[0] = true;
+                            }
+                        }
+                    });
+        }
+        if (!holder[0]) {
+            Toast.makeText(LoginActivity.this, "Reset Failed. Must Be Registered.",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
