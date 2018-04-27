@@ -27,6 +27,7 @@ import java.util.Map;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logInfo;
 
 
 @SuppressWarnings("ALL")
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                logInfo(LoginActivity._userEnteredEmail, "ACTION: user has logged out");
                 startActivity(intent);
             }
         });

@@ -27,6 +27,8 @@ import android.app.AlertDialog;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logReservation;
+
 /**
  * Created by Ally Liu on 2/27/2018.
  */
@@ -111,6 +113,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
+                    logReservation(LoginActivity._userEnteredEmail, "ACTION: user successfully made a reservation");
 
                 } else {
                     AlertDialog alertDialog = new AlertDialog
@@ -119,6 +122,7 @@ public class ShelterInfoActivity extends AppCompatActivity {
                     alertDialog.setMessage("You already have a bed reserved in " +
                             "another shelter! Please cancel before reserving again.");
                     alertDialog.show();
+                    logReservation(LoginActivity._userEnteredEmail, "ACTION: reservation error");
                 }
             }
         });

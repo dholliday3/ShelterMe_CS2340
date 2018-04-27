@@ -46,9 +46,12 @@ import java.util.List;
 import gatech.cs2340.shelterme.shelterme_new.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logInfo;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -277,6 +280,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             Log.d("registered user", "success");
                             Intent intent = new Intent(RegistrationActivity.this,
                                     LoginActivity.class);
+                            // Security logging, log successful registration.
+                            logInfo(_userEnteredEmail, "ACTION: new user registered");
                             startActivity(intent);
 
 
@@ -284,6 +289,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             // If sign in fails, display a message to the user.
                             Log.w("Registration", "createUserWithEmail:failure",
                                     task.getException());
+                            logInfo(_userEnteredEmail, "ACTION: new user attempted to register but authentication failed");
                             Toast.makeText(RegistrationActivity.this,
                                     "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

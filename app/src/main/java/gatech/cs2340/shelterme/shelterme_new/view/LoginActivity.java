@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static gatech.cs2340.shelterme.shelterme_new.controller.SecurityLogger.logInfo;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Email and password entered by user
      */
-    private String _userEnteredEmail;
+    public static String _userEnteredEmail;
     private String _userEnteredPassword;
 
     private FirebaseAuth mAuth;
@@ -312,10 +313,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             //updateUI(user);
                             loggedIn = true;
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            logInfo(_userEnteredEmail, "ACTION: user login");
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("login", "signInWithEmail:failure", task.getException());
+                            logInfo(_userEnteredEmail, "ACTION: user attempted to log in but authentication failed");
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);

@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "130622846168-7vdhosaiiqus06mrrkqls4464dcgcbs1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gatech.cs2340.shelterme.shelterme_new",
+            "certificate_hash": "5946bd022cb3a974cd8fc9d145a0091ad42f21b7"
+          }
+        },
+        {
+          "client_id": "130622846168-papfg1p2h6r1n93eic5t48pvdbma0u23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gatech.cs2340.shelterme.shelterme_new",
+            "certificate_hash": "dc0dedb0d4e9ff48d0391b27df885d217df78d91"
+          }
+        },
+        {
           "client_id": "130622846168-3t8it1f0pj66qr8qp1atlt08gvvrk3j4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -48,8 +64,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id":
-              "130622846168-usldv5l193omsu8qkqijc0qnsirslhb0.apps.googleusercontent.com",
+              "client_id": "130622846168-usldv5l193omsu8qkqijc0qnsirslhb0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
