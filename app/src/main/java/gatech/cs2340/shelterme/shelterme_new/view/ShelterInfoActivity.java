@@ -90,11 +90,15 @@ public class ShelterInfoActivity extends AppCompatActivity {
                         beds = 0;
                     }
                     mDatabase.child("shelters").child(shelterID).child("beds").setValue(Integer.toString(beds));
+
+                    // TODO - log here
+
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(ShelterInfoActivity.this).create();
                     alertDialog.setTitle("Error");
                     alertDialog.setMessage("You already have a bed reserved in another shelter! Please cancel before reserving again.");
                     alertDialog.show();
+                    // TODO - log here
                 }
             }
         });

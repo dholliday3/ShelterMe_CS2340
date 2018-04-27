@@ -86,12 +86,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * used for incorrect attempts
      */
-    private String previousAttemptPassword;
     private String dbUserName;
     private int attemptedTimes;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // current user
-    private String userEmail;
-    boolean emailVerified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,21 +99,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mAuth = FirebaseAuth.getInstance();
 
-        // set current user email
-        setUserEmail();
-        Log.d("email", " " + userEmail);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mPasswordView = (EditText) findViewById(R.id.password);
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setText("Login");
@@ -410,18 +402,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-
-    /**
-     * get current user info
-     */
-    private void setUserEmail() {
-
-        if (user != null) {
-            // correct way of doing this
-            userEmail = user.getEmail();
-            emailVerified = user.isEmailVerified();
-        }
-    }
 
     /**
      * send reset email
